@@ -1,5 +1,7 @@
 module.exports = {
   presets: [
-    '@vue/app'
+    '@vue/app',
+    '@babel/preset-env',
+    '@babel/preset-react'
   ]
 }
