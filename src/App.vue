@@ -50,6 +50,6 @@ export default {
 
   data: () => ({
     //
-  }),
-};
+  })
+}
 </script>

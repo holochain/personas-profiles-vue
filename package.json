@@ -11,7 +11,9 @@
     "make:component": "vue-cli-service make:component",
     "make:directive": "vue-cli-service make:directive",
     "make:mixin": "vue-cli-service make:mixin",
-    "make:view": "vue-cli-service make:view"
+    "make:view": "vue-cli-service make:view",
+    "storybook:build": "vue-cli-service storybook:build -c config/storybook",
+    "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook"
   },
   "dependencies": {
     "@mdi/font": "^3.6.95",
@@ -22,6 +24,10 @@
     "vuetify": "^2.1.0"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^4.1.0 || ^5.0.0",
+    "@storybook/addon-knobs": "^4.1.0 || ^5.0.0",
+    "@storybook/addon-links": "^4.1.0 || ^5.0.0",
+    "@storybook/addon-notes": "^4.1.0 || ^5.0.0",
     "@vue/cli-plugin-babel": "^3.12.0",
     "@vue/cli-plugin-e2e-cypress": "^3.12.0",
     "@vue/cli-plugin-eslint": "^3.12.0",
@@ -37,6 +43,7 @@
     "pluralize": "^8.0.0",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
+    "vue-cli-plugin-storybook": "^0.6.1",
     "vue-cli-plugin-vuetify": "^2.0.2",
     "vue-cli-plugin-vuetify-cli": "^0.0.6",
     "vue-template-compiler": "^2.6.10",
