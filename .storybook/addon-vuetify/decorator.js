@@ -1,13 +1,14 @@
+// Imports
 import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
-import { VApp } from 'vuetify/lib';
-import { VContainer } from 'vuetify/lib';
-
+import Vuetify from 'vuetify'
 import { makeDecorator } from '@storybook/addons'
+
+// Utilities
 import deepmerge from 'deepmerge'
+
+// Vuetify
 import 'vuetify/dist/vuetify.min.css'
 import '@mdi/font/css/materialdesignicons.min.css'
-import '../../src/plugins/vuetify';
 
 Vue.use(Vuetify)
 
@@ -17,7 +18,7 @@ export default makeDecorator({
   wrapper: (storyFn, context, { parameters = {} }) => {
     // Reduce to one new URL?
     const searchParams = new URL(window.location).searchParams
-    const dark = true // searchParams.get('eyes-variation') === 'dark'
+    const dark = searchParams.get('eyes-variation') === 'dark'
     const rtl = searchParams.get('eyes-variation') === 'rtl'
     const vuetify = new Vuetify(deepmerge({
       rtl,
@@ -27,7 +28,7 @@ export default makeDecorator({
 
     return Vue.extend({
       vuetify,
-      components: { VApp, VContainer, WrappedComponent },
+      components: { WrappedComponent },
       template: `
         <v-app>
           <v-container fluid>

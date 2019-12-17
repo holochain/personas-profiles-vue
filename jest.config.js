@@ -9,10 +9,10 @@ module.exports = {
   transform: {
     '^.+\\.vue$': 'vue-jest',
     '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
-    '^.+\\.jsx?$': 'babel-jest'
+    '^.+\\.js?$': 'babel-jest'
   },
   transformIgnorePatterns: [
-    '/node_modules/'
+    '<rootDir>/node_modules/(?!vuetify)'
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'

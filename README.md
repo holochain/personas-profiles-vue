@@ -1,4 +1,4 @@
-# personas-profiles-vue
+# test-vue
 
 ## Project setup
 ```

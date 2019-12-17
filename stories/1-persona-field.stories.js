@@ -1,16 +1,16 @@
 import { storyFactory } from '../.storybook/util/helpers'
 import { text, boolean } from '@storybook/addon-knobs'
-import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
-import { specs } from 'storybook-addon-specifications';
-import PersonaField from '../src/components/PersonaField/PersonaField.vue';
-import { personaFieldTests } from '../tests/unit/PersonaField.spec';
+// import { action } from '@storybook/addon-actions'
+// import { linkTo } from '@storybook/addon-links'
+import { specs } from 'storybook-addon-specifications'
+import PersonaField from '../src/components/PersonaField.vue'
+import { personaFieldTests } from '../tests/unit/PersonaField.spec'
 
 export default {
-  title: 'Persona Field',
-};
+  title: 'Persona Field'
+}
 
-const storyComponent = storyFactory({ PersonaField });
+const storyComponent = storyFactory({ PersonaField })
 
 export const newField = () => {
   const story = storyComponent({
@@ -35,8 +35,8 @@ export const newField = () => {
       }
     },
     template: `<persona-field :curatedFieldNames="[{ fieldName: 'Full Name', fieldType: 'singleLineText' },{ fieldName: 'Avatar', fieldType: 'image' }]"></persona-field>`
-  });
-  specs(() => personaFieldTests);
+  })
+  specs(() => personaFieldTests)
   return story
 }
 newField.story = {
