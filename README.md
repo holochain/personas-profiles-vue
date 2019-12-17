@@ -1,34 +1,10 @@
-# test-vue
+# Personas & Profiles
 
-## Project setup
-```
-yarn install
-```
+View the book with "<i class="fa fa-book fa-fw"></i> Book Mode".
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+Components
+---
+- [Persona Field - New](/0rmgxxXlTJKL00uV14JD6w)
 
-### Compiles and minifies for production
-```
-yarn build
-```
 
-### Run your unit tests
-```
-yarn test:unit
-```
-
-### Run your end-to-end tests
-```
-yarn test:e2e
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+###### tags: `Holochain` `Distributed Identity`
