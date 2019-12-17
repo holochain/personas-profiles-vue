@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "storybook:serve": "vue-cli-service storybook:serve -p 6006 -s ./public",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
@@ -12,9 +12,8 @@
     "make:directive": "vue-cli-service make:directive",
     "make:mixin": "vue-cli-service make:mixin",
     "make:view": "vue-cli-service make:view",
-    "serve:storybook": "start-storybook -p 6006",
-    "storybook:build": "vue-cli-service storybook:build -c config/storybook",
-    "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook"
+    "build": "vue-cli-service build",
+    "storybook:build": "vue-cli-service storybook:build -s ./public"
   },
   "dependencies": {
     "@mdi/font": "^3.6.95",
@@ -45,6 +44,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-vue": "^2.0.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
@@ -53,6 +53,7 @@
     "prismjs": "^1.17.1",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
+    "storybook-addon-specifications": "^2.1.5",
     "vue-cli-plugin-storybook": "^0.6.1",
     "vue-cli-plugin-vuetify": "^2.0.2",
     "vue-cli-plugin-vuetify-cli": "^0.0.6",

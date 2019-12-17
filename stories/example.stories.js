@@ -1,23 +1,11 @@
 // Utilities
-import { storyFactory } from '../util/helpers'
+import { storyFactory } from '../.storybook/util/helpers'
 import { text, boolean } from '@storybook/addon-knobs'
+
 
 export default { title: 'BaseCard' }
 
-function genComponent (name) {
-  return {
-    name,
-
-    render (h) {
-      return h('div', this.$slots.default)
-    }
-  }
-}
-
-const story = storyFactory({
-  BaseBtn: genComponent('BaseBtn'),
-  BaseCard: genComponent('BaseCard'),
-})
+const story = storyFactory({});
 
 export const asDefault = () => story({
   props: {
@@ -41,20 +29,20 @@ export const asDefault = () => story({
     }
   },
   template: `
-    <base-card>
+    <v-card>
       <v-card-title v-if="title">{{ titleText }}</v-card-title>
 
       <v-card-text v-if="text">{{ cardText }}</v-card-text>
 
       <v-divider v-if="divider"></v-divider>
 
-      <v-card-actions v-if="actions">
+      <v-card-actions>
         <v-btn text>Cancel</v-btn>
 
         <v-spacer></v-spacer>
 
-        <base-btn depressed>Accept</base-btn>
+        <v-btn depressed>Accept</v-btn>
       </v-card-actions>
-    </base-card>
+    </v-card>
   `
 })

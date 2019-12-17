@@ -1,15 +1,15 @@
 <template>
-  <HelloWorld />
+  <PersonaField />
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld'
+import PersonaField from '../components/PersonaField/PersonaField.vue'
 
 export default {
   name: 'Home',
 
   components: {
-    HelloWorld
+    PersonaField
   }
 }
 </script>
