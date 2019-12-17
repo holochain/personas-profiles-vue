@@ -1,55 +1,58 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+  <v-app id="inspire">
+    <v-navigation-drawer v-model="drawer" app clipped>
+      <v-list dense>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-view-dashboard</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <router-link to="/" tag="v-list-item">Dashboard</router-link>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-settings</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <router-link to="/persona" tag="v-list-item">Personas</router-link>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+    <v-app-bar app clipped-left>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-toolbar-title>Holochain</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
-      <router-view/>
+      <v-container class="fill-height" fluid>
+        <v-row align="center" justify="center">
+          <v-col>
+            <router-view />
+          </v-col>
+        </v-row>
+      </v-container>
     </v-content>
+
+    <v-footer app>
+      <span>&copy; 2019</span>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
-
 export default {
   name: 'App',
-
+  props: {
+    source: String
+  },
   data: () => ({
-    //
-  })
+    drawer: null
+  }),
+  created () {
+    this.$vuetify.theme.dark = true
+  }
 }
 </script>

@@ -5,9 +5,12 @@ import { text, boolean } from '@storybook/addon-knobs'
 import { specs } from 'storybook-addon-specifications'
 import PersonaField from '../src/components/PersonaField.vue'
 import { personaFieldTests } from '../tests/unit/PersonaField.spec'
-
+import personaNewFieldNotes from './notes/persona-field-new.md'
 export default {
-  title: 'Persona Field'
+  title: 'Persona Field',
+  parameters: {
+    notes: personaNewFieldNotes
+  }
 }
 
 const storyComponent = storyFactory({ PersonaField })
