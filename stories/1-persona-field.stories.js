@@ -37,7 +37,7 @@ export const newField = () => {
         default: text('Title text', 'Card title')
       }
     },
-    template: `<persona-field :curatedFieldNames="[{ fieldName: 'Full Name', fieldType: 'singleLineText' },{ fieldName: 'Avatar', fieldType: 'image' }]"></persona-field>`
+    template: `<persona-field :newField=true :curatedFieldNames="[{ fieldName: 'Full Name', fieldType: 'singleLineText' },{ fieldName: 'Avatar', fieldType: 'thumbnail' }]"></persona-field>`
   })
   specs(() => personaFieldTests)
   return story
