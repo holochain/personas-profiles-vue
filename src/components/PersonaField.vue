@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height ma-0 pa-0" fluid>
-    <v-row align="center" justify="center">
-      <v-col cols="1" align="center" class="pa-1">
+    <v-row align="center" justify="start">
+      <v-col cols="1" align="center" justify="center" class="pa-1">
         <template>
          <v-slide-x-reverse-transition mode="out-in">
            <v-icon
@@ -57,7 +57,6 @@ export default {
   props: ['curatedFieldNames', 'newField'],
   watch: {
     selected (fieldType) {
-      console.log(fieldType)
       this.showSingleLineTextField = fieldType === 'singleLineText'
       this.showImage = fieldType === 'image'
       this.showThumbnail = fieldType === 'thumbnail'

@@ -6,7 +6,7 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
-new Vue({
+window.Event = new Vue({
   router,
   vuetify,
   render: h => h(App)

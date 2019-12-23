@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import { makeDecorator } from '@storybook/addons'
+import router from '../../src/router'
 
 // Utilities
 import deepmerge from 'deepmerge'
@@ -28,6 +29,7 @@ export default makeDecorator({
 
     return Vue.extend({
       vuetify,
+      router,
       components: { WrappedComponent },
       template: `
         <v-app>

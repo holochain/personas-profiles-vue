@@ -1,0 +1,1 @@
+The Personas hApp makes it easy for people to manage their personal information with as many **Personas** as they want. People may have different personas when interacting with their family, friends and professional networks.

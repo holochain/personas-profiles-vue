@@ -22,6 +22,26 @@ export default new Router({
       path: '/personas',
       name: 'personas',
       component: () => import(/* webpackChunkName: "persona" */ './views/Personas.vue')
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import(/* webpackChunkName: "profile" */ './views/Profile.vue')
+    },
+    {
+      path: '/image-manager',
+      name: 'image-manager',
+      component: () => import(/* webpackChunkName: "image-manager" */ './views/ImageManager.vue')
+    },
+    {
+      path: '/video-manager',
+      name: 'video-manager',
+      component: () => import(/* webpackChunkName: "video-manager" */ './views/VideoManager.vue')
+    },
+    {
+      path: '/music-manager',
+      name: 'music-manager',
+      component: () => import(/* webpackChunkName: "music-manager" */ './views/MusicManager.vue')
     }
   ]
 })
