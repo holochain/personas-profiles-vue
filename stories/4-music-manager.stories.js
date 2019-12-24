@@ -13,7 +13,7 @@ export default {
 
 const storyComponent = storyFactory({ MusicManager })
 
-export const imageManager = () => {
+export const musicManager = () => {
   const story = storyComponent({
     props: {
       items: {
@@ -24,6 +24,6 @@ export const imageManager = () => {
   })
   return story
 }
-imageManager.story = {
+musicManager.story = {
   name: 'List'
 }

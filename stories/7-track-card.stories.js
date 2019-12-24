@@ -20,7 +20,7 @@ export const trackCard = () => {
         default: object('Track', track)
       }
     },
-    template: `<track-card :track="track" />`
+    template: `<track-card :track="track" :play="isPlaying"/>`
   })
   return story
 }
