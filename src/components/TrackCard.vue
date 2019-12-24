@@ -33,14 +33,14 @@
           <v-btn icon>
             <v-icon>mdi-skip-backward</v-icon>
           </v-btn>
-          <v-btn icon>
+          <v-btn icon @click="stopTrack">
             <v-icon>mdi-stop</v-icon>
           </v-btn>
           <v-btn icon>
             <v-icon v-if="!play" @click="playTrack">mdi-play</v-icon>
             <v-icon v-if="play" @click="pauseTrack">mdi-pause</v-icon>
           </v-btn>
-          <v-btn icon>
+          <v-btn icon @click="this.$refs.track.skipForward">
             <v-icon>mdi-skip-forward</v-icon>
           </v-btn>
         </v-col>
@@ -81,6 +81,10 @@ export default {
       this.play = true
     },
     pauseTrack () {
+      this.play = false
+    },
+    stopTrack () {
+      this.$refs.track.stop()
       this.play = false
     },
     updateDuration: function (duration) {

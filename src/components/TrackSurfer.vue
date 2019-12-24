@@ -33,10 +33,12 @@ export default {
       let skipTime = Math.max(0, this.currentChunk.player.chunkSurfer.getCurrentTime() - this.duration / 25)
       this.currentChunk.player.chunkSurfer.setCurrentTime(skipTime)
     },
-    stop: function (stop) {
+    stop: function () {
       console.log('stop')
-      this.currentChunk.player.seek = true
       this.currentChunk.player.chunkSurfer.stop()
+      this.track.chunks.forEach(function (seekChunk) {
+        seekChunk.player.chunkSurfer.stop()
+      })
       this.currentChunk = this.track.chunks[0]
       this.$emit('played', 0, 'stop')
     }
@@ -56,56 +58,50 @@ export default {
         backend: 'MediaElement'
       })
 
-      // let nextChunkId = Number(chunk.index) + 1
-      // chunk.player.chunkSurfer.on('finish', function () {
-      //   if (chunk.player.seek) {
-      //     return
-      //   }
-      //   console.log('finish')
-      //   if (that.track.chunks[nextChunkId]) {
-      //     that.currentChunk = that.track.chunks[nextChunkId]
-      //     that.currentChunk.player.chunkSurfer.play()
-      //   }
-      // })
+      let nextChunkId = Number(chunk.index) + 1
+      chunk.player.chunkSurfer.on('finish', function () {
+        console.log('finish')
+        if (that.track.chunks[nextChunkId]) {
+          that.currentChunk = that.track.chunks[nextChunkId]
+          that.currentChunk.player.chunkSurfer.play()
+        }
+      })
 
-      // chunk.player.chunkSurfer.on('audioprocess', function () {
-      //   if (chunk.player.seek) {
-      //     return
-      //   }
-      //   let playedTime = chunk.player.chunkSurfer.getCurrentTime()
-      //   that.track.chunks.forEach(function (seekChunk) {
-      //     if(Number(seekChunk.index) < Number(chunk.index)){
-      //       playedTime = playedTime + seekChunk.duration
-      //     }
-      //   })
-      //   that.playedTime = playedTime
-      //   that.$emit('played', playedTime, 'audioprocess')
-      // })
+      chunk.player.chunkSurfer.on('audioprocess', function () {
+        let playedTime = chunk.player.chunkSurfer.getCurrentTime()
+        that.track.chunks.forEach(function (seekChunk) {
+          if (Number(seekChunk.index) < Number(chunk.index)) {
+            playedTime = playedTime + seekChunk.duration
+          }
+        })
+        that.playedTime = playedTime
+        that.$emit('played', playedTime, 'audioprocess')
+      })
 
-      // chunk.player.chunkSurfer.on('seek', function () {
-      //   if (chunk.player.seek) {
-      //     chunk.player.seek = false
-      //     return
-      //   }
-      //   let playedTime = chunk.player.chunkSurfer.getCurrentTime()
-      //   that.currentChunk = chunk
-      //   that.track.chunks.forEach(function (seekChunk) {
-      //     console.log('seeking ' + seekChunk.index)
-      //     if(Number(seekChunk.index) < Number(chunk.index)){
-      //       seekChunk.player.seek = true
-      //       seekChunk.player.chunkSurfer.setCurrentTime(seekChunk.duration)
-      //       playedTime = playedTime + seekChunk.duration
-      //     } else if (Number(seekChunk.index)> Number(chunk.index)) {
-      //       seekChunk.player.seek = true
-      //       seekChunk.player.chunkSurfer.stop()
-      //     }
-      //   })
-      //   if(that.play) {
-      //     chunk.player.chunkSurfer.play()
-      //   }
-      //   that.playedTime = playedTime
-      //   that.$emit('played', playedTime, 'seek')
-      // })
+      chunk.player.chunkSurfer.on('seek', function () {
+        // if (chunk.player.seek) {
+        //   chunk.player.seek = false
+        //   return
+        // }
+        let playedTime = chunk.player.chunkSurfer.getCurrentTime()
+        // that.currentChunk = chunk
+        // that.track.chunks.forEach(function (seekChunk) {
+        //   console.log('seeking ' + seekChunk.index)
+        //   if(Number(seekChunk.index) < Number(chunk.index)){
+        //     seekChunk.player.seek = true
+        //     seekChunk.player.chunkSurfer.setCurrentTime(seekChunk.duration)
+        //     playedTime = playedTime + seekChunk.duration
+        //   } else if (Number(seekChunk.index)> Number(chunk.index)) {
+        //     seekChunk.player.seek = true
+        //     seekChunk.player.chunkSurfer.stop()
+        //   }
+        // })
+        // if(that.play) {
+        //   chunk.player.chunkSurfer.play()
+        // }
+        that.playedTime = playedTime
+        that.$emit('played', playedTime, 'seek')
+      })
       if (chunk.pcm) {
         console.log('loading peaks for ' + chunk.index)
         chunk.player.chunkSurfer.load(chunk.src, chunk.pcm)
@@ -114,9 +110,6 @@ export default {
       }
 
       chunk.player.chunkSurfer.on('waveform-ready', function () {
-        chunk.duration = chunk.player.chunkSurfer.getDuration()
-        that.duration = that.duration + chunk.duration
-        that.$emit('duration', that.duration)
         console.log('wave ready ' + chunk.index)
         if (!chunk.pcm) {
           var pcmData = chunk.player.chunkSurfer.exportPCM(1024, 10000, false)
@@ -128,10 +121,10 @@ export default {
       })
       chunk.player.chunkSurfer.on('ready', function () {
         console.log('ready ' + chunk.index)
+        chunk.player.ready = true
         chunk.duration = chunk.player.chunkSurfer.getDuration()
         that.duration = that.duration + chunk.duration
         that.$emit('duration', that.duration)
-        console.log('wave ready ' + chunk.index)
       })
     })
     this.currentChunk = this.track.chunks[0]
@@ -139,14 +132,27 @@ export default {
   watch: {
     play: function (play) {
       if (play) { // So there is aregistered user interaction on each wavesurfer
+        this.currentChunk.player.chunkSurfer.play()
         if (this.firstPlay) {
+          let that = this
           this.track.chunks.forEach(function (seekChunk) {
-            seekChunk.player.chunkSurfer.play()
-            seekChunk.player.chunkSurfer.stop()
+            if (that.currentChunk.index !== seekChunk.index) {
+              if (!seekChunk.player.ready) {
+                seekChunk.player.chunkSurfer.on('ready', function () {
+                  console.log('pausing ' + seekChunk.index)
+                  seekChunk.player.chunkSurfer.stop()
+                })
+                console.log('playing ' + seekChunk.index)
+                seekChunk.player.chunkSurfer.play()
+              } else {
+                seekChunk.player.chunkSurfer.play()
+                seekChunk.player.chunkSurfer.stop()
+              }
+            }
           })
+          console.log('all clicked')
           this.firstPlay = false
         }
-        this.currentChunk.player.chunkSurfer.play()
       } else {
         this.currentChunk.player.chunkSurfer.pause()
       }
