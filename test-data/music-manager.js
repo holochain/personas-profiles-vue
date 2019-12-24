@@ -70,9 +70,42 @@ export const items = [
           {
             title: 'Dark Minimal',
             id: 'QmhashyStuff',
-            src: './darkMinimal.wav',
             playing: false,
-            showPlayer: false
+            showPlayer: false,
+            chunks: [
+              {
+                src: './1-Babylon Application 2019.wav',
+                index: 0
+              },
+              {
+                src: './2-Babylon Application 2019.wav',
+                index: 1
+              },
+              {
+                src: './3-Babylon Application 2019.wav',
+                index: 2
+              },
+              {
+                src: './4-Babylon Application 2019.wav',
+                index: 3
+              },
+              {
+                src: './5-Babylon Application 2019.wav',
+                index: 4
+              },
+              {
+                src: './6-Babylon Application 2019.wav',
+                index: 5
+              },
+              {
+                src: './7-Babylon Application 2019.wav',
+                index: 6
+              },
+              {
+                src: './8-Babylon Application 2019.wav',
+                index: 7
+              }
+            ]
           }
         ]
       },

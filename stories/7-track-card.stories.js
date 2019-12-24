@@ -1,30 +1,29 @@
 import { storyFactory } from '../.storybook/util/helpers'
-import { array } from '@storybook/addon-knobs'
+import { object } from '@storybook/addon-knobs'
 // import { action } from '@storybook/addon-actions'
 // import { linkTo } from '@storybook/addon-links'
 // import { specs } from 'storybook-addon-specifications'
-import ImageManager from '../src/components/ImageManager.vue'
+import TrackCard from '../src/components/TrackCard.vue'
 // import { personaCardNewTests } from '../tests/unit/PersonaCardNew.spec'
 // import personaNewNotes from './notes/persona-card-new.md'
-import { items } from '../test-data/image-manager.js'
-
+import { track } from '../test-data/track-surfer.js'
 export default {
-  title: 'Image Manager'
+  title: 'Track Card'
 }
 
-const storyComponent = storyFactory({ ImageManager })
+const storyComponent = storyFactory({ TrackCard })
 
-export const imageManager = () => {
+export const trackCard = () => {
   const story = storyComponent({
     props: {
-      items: {
-        default: array('Photo Folders', items)
+      track: {
+        default: object('Track', track)
       }
     },
-    template: `<image-manager :items="items" />`
+    template: `<track-card :track="track" />`
   })
   return story
 }
-imageManager.story = {
-  name: 'List'
+trackCard.story = {
+  name: 'Card'
 }

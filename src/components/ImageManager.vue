@@ -38,7 +38,7 @@
         <v-row>
           <v-col v-for="photo in photos" :key="photo.name" class="d-flex child-flex" cols="4">
             <v-card flat tile class="d-flex">
-              <v-img v-if="photo.title!=='mdi-upload'" aspect-ratio="1" class="grey lighten-2 white--text align-end">
+              <v-img v-if="photo.title!=='mdi-upload'" aspect-ratio="1" class="grey lighten-2 white--text align-end" icon :key="`icon-${photo.id}`" @click="photo.footerVisible = !photo.footerVisible">
                 <template v-slot:placeholder>
                   <v-row class="fill-height ma-0" align="center" justify="center">
                     <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -52,7 +52,7 @@
                     class="fill-height ma-0"
                     align="center"
                     justify="center">
-                    <v-btn icon>
+                    <v-btn icon :key="`icon-${photo.id}`" @click="photo.footerVisible = !photo.footerVisible">
                       <v-icon class="material-icons" style="font-size: 100px">mdi-upload</v-icon>
                     </v-btn>
                   </v-row>
@@ -60,6 +60,11 @@
                 <v-card-title>Upload a Photo</v-card-title>
               </v-img>
             </v-card>
+            <v-footer :key="`footer-${photo.id}`" app class="font-weight-medium" v-if="photo.footerVisible">
+              <v-row no-gutters align-content="center">
+                <p>footer {{photo.title}}</p>
+              </v-row>
+            </v-footer>
           </v-col>
         </v-row>
       </v-col>
@@ -78,10 +83,12 @@ export default {
     },
     tree: [],
     uploadPhoto: {
-      title: 'mdi-upload'
+      title: 'mdi-upload',
+      footerVisible: false
     },
     photos: [{
-      title: 'mdi-upload'
+      title: 'mdi-upload',
+      footerVisible: false
     }]
   }),
   methods: {

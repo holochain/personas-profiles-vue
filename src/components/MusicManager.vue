@@ -38,10 +38,10 @@
         <v-col v-for="(track) in tracks" :key="track.id" cols="12">
           <v-card class="mx-auto">
             <v-list-item class="ml-n3">
-              <v-list-item-avatar v-if="track.playing===true" @click="showPlayer(track)">
+              <v-list-item-avatar v-if="track.playing===true" @click="playPauseTrack(track)">
                 <v-icon x-large>mdi-pause-circle-outline</v-icon>
               </v-list-item-avatar>
-              <v-list-item-avatar v-if="!track.playing===true" @click="showPlayer(track)">
+              <v-list-item-avatar v-if="!track.playing===true" @click="playPauseTrack(track)">
                 <v-icon x-large>mdi-play-circle-outline</v-icon>
               </v-list-item-avatar>
               <v-list-item-content>
@@ -49,8 +49,8 @@
                 <v-list-item-subtitle>by @philt3r</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
-            <v-card class="d-flex flex-row mb-6" flat tile>
-              <v-card v-for="(chunk) in track.chunks" :key="track.id + chunk.index" width="100%" tile>
+            <v-card class="d-flex flex-row ma-0 pa-0" flat tile>
+              <v-card v-for="(chunk) in track.chunks" :key="track.id + chunk.index" width="100%" class="ma-0 pa-0" flat>
                 <div :id="'waveform-' + track.id + chunk.index" />
               </v-card>
             </v-card>
@@ -77,7 +77,7 @@
               <v-btn icon @click="stopPlayer()">
                 <v-icon>mdi-stop</v-icon>
               </v-btn>
-              <v-btn icon @click="playPlayer()">
+              <v-btn icon @click="playPausePlayer()">
                 <v-icon v-if="!playingTrack.playing===true">mdi-play</v-icon>
                 <v-icon v-if="playingTrack.playing===true">mdi-pause</v-icon>
               </v-btn>
@@ -145,14 +145,14 @@ export default {
             }
           })
           wavesurfer.on('audioprocess', function () {
-            that.currentPlayBack = Math.round(wavesurfer.getCurrentTime() / wavesurfer.getDuration() * 100)
+            let startPoint = Number(chunk.index) / track.chunks.length * 100
+            that.currentPlayBack = startPoint + Math.round(wavesurfer.getCurrentTime() / wavesurfer.getDuration() * 100) / track.chunks.length
           })
           wavesurfer.on('seek', function (progress) {
             console.log(wavesurfer.container.id)
             if (that.playingTrack.id === track.id) {
-              that.currentPlayBack = Math.round(progress * 100)
               if (wavesurfer.container.id !== that.playingWaveSurfer.container.id) {
-                that.playingWaveSurfer.pause()
+                that.playingWaveSurfer.stop()
                 that.playingWaveSurfer = wavesurfer
                 that.playingWaveSurfer.playPause()
               }
@@ -173,31 +173,52 @@ export default {
     }, { deep: false })
   },
   methods: {
-    showPlayer (track) {
+    playPauseTrack (track) {
       this.playerVisible = true
-      this.playingWaveSurfer = this.wavesurfers.filter(e => e.key === '#waveform-' + track.id + track.chunks[0].index)[0].wavesurfer
-      this.playingTrack.playing = false
-      this.playingTrack = track
-      this.playPlayer()
+      if (!this.playingWaveSurfer) {
+        this.playingWaveSurfer = this.wavesurfers.filter(e => e.key === '#waveform-' + track.id + track.chunks[0].index)[0].wavesurfer
+        this.playingTrack = track
+        this.playingTrack.playing = true
+        this.playingWaveSurfer.playPause()
+      } else if (this.playingWaveSurfer.container.id.contains(this.track.id)) {
+        this.playingWaveSurfer.playPause()
+        this.playingTrack.playing = this.playingWaveSurfer.isPlaying()
+      } else if (!this.playingWaveSurfer.container.id.contains(this.track.id)) {
+        this.playingWaveSurfer = this.wavesurfers.filter(e => e.key === '#waveform-' + track.id + track.chunks[0].index)[0].wavesurfer
+        this.playingTrack = track
+        this.playingWaveSurfer.playPause()
+        this.playingTrack.playing = this.playingWaveSurfer.isPlaying()
+      }
     },
-    playPlayer () {
-      this.wavesurfers.forEach(eachwave => {
-        if (eachwave.wavesurfer !== this.playingWaveSurfer) {
-          eachwave.wavesurfer.pause()
-        }
-      })
+    playPausePlayer () {
       this.playingWaveSurfer.playPause()
       this.playingTrack.playing = this.playingWaveSurfer.isPlaying()
+      // if (this.playingWaveSurfer.container.id.contains(this.playingTrack.id)) {
+      //   this.playingWaveSurfer.playPause()
+      //   this.playingTrack.playing = this.playingWaveSurfer.isPlaying()
+      // } else {
+      //
+      // }
+      // this.wavesurfers.forEach(eachwave => {
+      //   if (eachwave.wavesurfer !== this.playingWaveSurfer) {
+      //     eachwave.wavesurfer.pause()
+      //   }
+      // })
+      // this.playingWaveSurfer.playPause()
+      // this.playingTrack.playing = this.playingWaveSurfer.isPlaying()
     },
     stopPlayer () {
-      this.playingWaveSurfer.pause()
-      this.currentPlayBack = 0
+      this.wavesurfers.filter(e => e.key.startsWith('#waveform-' + this.playingTrack.id)).forEach(eachwave => {
+        eachwave.wavesurfer.stop()
+      })
+      this.playingWaveSurfer = this.wavesurfers.filter(e => e.key === '#waveform-' + this.playingTrack.id + this.playingTrack.chunks[0].index)[0].wavesurfer
+      this.playingWaveSurfer.setCurrentTime(0)
       this.playingTrack.playing = false
     },
     skip (seconds) {
       let currentTime = this.playingWaveSurfer.getCurrentTime() + parseFloat(seconds)
       if (currentTime < 0) { currentTime = 0 }
-      this.currentPlayBack = Math.round(currentTime / this.playingWaveSurfer.getDuration() * 100)
+      this.playingWaveSurfer.setCurrentTime(currentTime)
     },
     scrub (offSet1, offSet2) {
       this.currentPlayBack = (offSet1 / offSet2) * 100
