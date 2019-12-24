@@ -49,9 +49,11 @@
                 <v-list-item-subtitle>by @philt3r</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
-            <v-img class="pl-2 pr-2">
-              <div :id="'waveform-' + track.id" />
-            </v-img>
+            <v-card class="d-flex flex-row mb-6" flat tile>
+              <v-card v-for="(chunk) in track.chunks" :key="track.id + chunk.index" width="100%" tile>
+                <div :id="'waveform-' + track.id + chunk.index" />
+              </v-card>
+            </v-card>
             <v-card-actions>
               <v-list-item class="grow">
                 <v-row align="center" justify="end">
@@ -122,33 +124,58 @@ export default {
     this.$watch('tracks', function (tracks) {
       let that = this
       tracks.forEach(function (track) {
-        let wavesurfer = WaveSurfer.create({
-          container: '#waveform-' + track.id,
-          waveColor: that.$vuetify.theme.currentTheme.primary,
-          progressColor: 'hsla(200, 100%, 30%, 0.5)',
-          cursorColor: that.$vuetify.theme.currentTheme.action,
-          barWidth: 2,
-          barHeight: 1
+        track.chunks.forEach(function (chunk) {
+          let wavesurfer = WaveSurfer.create({
+            container: '#waveform-' + track.id + chunk.index,
+            waveColor: that.$vuetify.theme.currentTheme.primary,
+            progressColor: that.$vuetify.theme.currentTheme.action,
+            cursorColor: '#00000000', // that.$vuetify.theme.currentTheme.action,
+            barWidth: 2,
+            barHeight: 1,
+            backend: 'MediaElement'
+          })
+          let nextChunkId = Number(chunk.index) + 1
+          wavesurfer.on('finish', function () {
+            console.log('finished #waveform-' + track.id + chunk.index)
+            if (that.wavesurfers.some(e => e.key === '#waveform-' + track.id + nextChunkId)) {
+              that.playingWaveSurfer = that.wavesurfers.filter(e => e.key === '#waveform-' + track.id + nextChunkId)[0].wavesurfer
+              that.playingWaveSurfer.stop()
+              that.playingWaveSurfer.playPause()
+              console.log('playing next #waveform-' + track.id + nextChunkId)
+            }
+          })
+          wavesurfer.on('audioprocess', function () {
+            that.currentPlayBack = Math.round(wavesurfer.getCurrentTime() / wavesurfer.getDuration() * 100)
+          })
+          wavesurfer.on('seek', function (progress) {
+            console.log(wavesurfer.container.id)
+            if (that.playingTrack.id === track.id) {
+              that.currentPlayBack = Math.round(progress * 100)
+              if (wavesurfer.container.id !== that.playingWaveSurfer.container.id) {
+                that.playingWaveSurfer.pause()
+                that.playingWaveSurfer = wavesurfer
+                that.playingWaveSurfer.playPause()
+              }
+            }
+          })
+          wavesurfer.load(chunk.src)
+          // wavesurfer.on('waveform-ready', function () {
+          //   const pcm = wavesurfer.exportPCM(1024, 1024, true)
+          //   // console.log('pcm', pcm)
+          // })
+          if (that.wavesurfers.some(e => e.key === '#waveform-' + track.id + chunk.index)) {
+            that.wavesurfers.filter(e => e.key === '#waveform-' + track.id + chunk.index)[0].wavesurfer = wavesurfer
+          } else {
+            that.wavesurfers.push({ 'key': '#waveform-' + track.id + chunk.index, 'wavesurfer': wavesurfer })
+          }
         })
-        wavesurfer.on('audioprocess', function () {
-          that.currentPlayBack = Math.round(wavesurfer.getCurrentTime() / wavesurfer.getDuration() * 100)
-        })
-        wavesurfer.on('seek', function (progress) {
-          that.currentPlayBack = Math.round(progress * 100)
-        })
-        wavesurfer.load(track.src)
-        if (that.wavesurfers.some(e => e.key === '#waveform-' + track.id)) {
-          that.wavesurfers.filter(e => e.key === '#waveform-' + track.id)[0].wavesurfer = wavesurfer
-        } else {
-          that.wavesurfers.push({ 'key': '#waveform-' + track.id, 'wavesurfer': wavesurfer })
-        }
       })
     }, { deep: false })
   },
   methods: {
     showPlayer (track) {
       this.playerVisible = true
-      this.playingWaveSurfer = this.wavesurfers.filter(e => e.key === '#waveform-' + track.id)[0].wavesurfer
+      this.playingWaveSurfer = this.wavesurfers.filter(e => e.key === '#waveform-' + track.id + track.chunks[0].index)[0].wavesurfer
       this.playingTrack.playing = false
       this.playingTrack = track
       this.playPlayer()
@@ -192,7 +219,7 @@ export default {
   watch: {
     currentPlayBack: function (val) {
       console.log(val)
-      this.playingWaveSurfer.setCurrentTime(val / 100 * this.playingWaveSurfer.getDuration())
+      // this.playingWaveSurfer.setCurrentTime(val / 100 * this.playingWaveSurfer.getDuration())
     }
   }
 }

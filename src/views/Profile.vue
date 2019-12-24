@@ -1,14 +1,17 @@
 <template>
-  <profile-card />
+  <profile-manager />
 </template>
 
 <script>
-import ProfileCard from '../components/ProfileCard.vue'
+import ProfileManager from '../components/ProfileManager.vue'
 
 export default {
   name: 'Profile',
   components: {
-    ProfileCard
+    ProfileManager
+  },
+  created () {
+    this.$vuetify.theme.dark = false
   }
 }
 </script>

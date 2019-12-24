@@ -11,30 +11,54 @@ export const items = [
           {
             title: 'Space Quakes',
             id: 'QmhashyStuff1',
-            src: './01 Space Quakes.mp3',
             playing: false,
-            showPlayer: false
+            showPlayer: false,
+            chunks: [
+              {
+                src: './01 Space Quakes.mp3',
+                index: 0
+              },
+              {
+                src: './01 Space Quakes.mp3',
+                index: 1
+              }
+            ]
           },
           {
             title: 'Full Circle',
             id: 'QmhashyStuff2',
-            src: './02 Full Circle.mp3',
             playing: false,
-            showPlayer: false
+            showPlayer: false,
+            chunks: [
+              {
+                src: './02 Full Circle.mp3',
+                index: 0
+              }
+            ]
           },
           {
             title: 'Irukandji Syndrome',
             id: 'QmhashyStuff3',
-            src: './03 Irukandji Syndrome.mp3',
             playing: false,
-            showPlayer: false
+            showPlayer: false,
+            chunks: [
+              {
+                src: './03 Irukandji Syndrome.mp3',
+                index: 0
+              }
+            ]
           },
           {
             title: 'Monstrous Freak',
             id: 'QmhashyStuff4',
-            src: './04 Monstrous Freak.mp3',
             playing: false,
-            showPlayer: false
+            showPlayer: false,
+            chunks: [
+              {
+                src: './04 Monstrous Freak.mp3',
+                index: 0
+              }
+            ]
           }
         ]
       },
