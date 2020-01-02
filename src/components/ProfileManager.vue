@@ -52,15 +52,9 @@
     <v-container fluid class="pa-6" id="mixes">
       <v-row>
         <h2>Mixes</h2>
-        <iframe width="100%" height="400" src="https://www.mixcloud.com/widget/iframe/?feed=%2Fphilt3r%2Fbabylon-application-2019%2F" frameborder="0" ></iframe>
-        <iframe width="100%" height="400" src="https://www.mixcloud.com/widget/iframe/?feed=%2Fphilt3r%2Flive-party-my-aeon%2F" frameborder="0" ></iframe>
-        <iframe width="100%" height="400" src="https://www.mixcloud.com/widget/iframe/?feed=%2Fphilt3r%2Fsnake-pit-sound-session-backstage-at-esoteric%2F" frameborder="0" ></iframe>
-        <iframe width="100%" height="400" src="https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fphilt3r%2Facid-punk-techno-junk-may-2019%2F" frameborder="0" ></iframe>
-        <iframe width="100%" height="400" src="https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fphilt3r%2Fequinox-2019-rainbird-ep-launch%2F" frameborder="0" ></iframe>
-        <iframe width="100%" height="400" src="https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fphilt3r%2Fthank-fuck-im-50-lukes-birthday-bash%2F" frameborder="0" ></iframe>
-        <iframe width="100%" height="400" src="https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fphilt3r%2Fdigital-hotdog-2018%2F" frameborder="0" ></iframe>
-        <iframe width="100%" height="400" src="https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fphilt3r%2Fsugarloaf-wtf-my-favourite-doof-for-years%2F" frameborder="0" ></iframe>
-        <iframe width="100%" height="400" src="https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fphilt3r%2Fdark-minimal-sept-2018%2F" frameborder="0" ></iframe>
+        <v-col v-for="(track) in tracks" :key="track.id" cols="12">
+          <track-card ref="trackCard" :track="track" @playing="pauseOtherTracks" />
+        </v-col>
       </v-row>
     </v-container>
     <v-toolbar v-if="isEditing">
@@ -71,14 +65,11 @@
     <v-container fluid class="pa-6" id="videos">
       <v-row>
         <h2>Videos</h2>
-        <iframe width="100%" height="400" src="https://www.youtube.com/embed/4RJMS2lItM4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <iframe width="100%" height="400" src="https://www.youtube.com/embed/33L2vm-LFJ8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <iframe width="100%" height="400" src="https://www.youtube.com/embed/WCLP6z30oDI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <iframe width="100%" height="400" src="https://www.youtube.com/embed/L7BFQwwOwcs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <iframe width="100%" height="400" src="https://www.youtube.com/embed/FVMyFMcFOf0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <iframe width="100%" height="400" src="https://www.youtube.com/embed/PaasPG_GrTk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <iframe width="100%" height="400" src="https://www.youtube.com/embed/bhuFOsm9y8M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <iframe width="100%" height="400" src="https://www.youtube.com/embed/Gq0DOqtu9o8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <v-col v-for="(video) in videos" :key="video.id" cols="12">
+          <video style="display:block; margin: 0 auto;" :src="video.src" type="video/mpeg" width="800">
+                    <!-- Here be the video -->
+          </video>
+        </v-col>
       </v-row>
     </v-container>
     <v-footer app class="font-weight-medium">
@@ -102,22 +93,35 @@
 </template>
 
 <script>
+import TrackCard from '../components/TrackCard.vue'
 import { mappings } from '../../test-data/profile-manager.js'
+import { items } from '../../test-data/music-manager.js'
 
 export default {
   name: 'ProfileManager',
   components: {
+    TrackCard
   },
   data () {
     return {
       isEditing: false,
-      mappings: mappings
+      mappings: mappings,
+      tracks: items[0].children[0].tracks,
+      videos: items[0].children[1].videos
     }
   },
   props: ['profileTitle'],
   methods: {
     navigate (id) {
       this.$vuetify.goTo(id, { duration: 1, offset: 50 })
+    },
+    pauseOtherTracks: function (trackId) {
+      let that = this
+      this.tracks.forEach(function (track, i) {
+        if (trackId !== track.id) {
+          that.$refs.trackCard[i].pausedByOtherTrack()
+        }
+      })
     }
   }
 }

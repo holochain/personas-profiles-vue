@@ -26,3 +26,5 @@ yarn-error.log*
 
 *.wav
 *.mp3
+
+public/vid

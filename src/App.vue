@@ -5,7 +5,7 @@
     </v-app-bar>
     <v-content>
       <v-container fluid fill-height>
-        <router-view></router-view>
+          <router-view :key="currentPath"></router-view>
       </v-container>
     </v-content>
   </v-app>
@@ -18,10 +18,14 @@ export default {
     source: String
   },
   data: () => ({
-    drawer: null
+    drawer: null,
+    currentPath: ''
   }),
   created () {
     this.$vuetify.theme.dark = true
+  },
+  mounted () {
+    this.currentPath = this.$route.path
   }
 }
 </script>

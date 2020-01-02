@@ -18,12 +18,14 @@
          label="Select a Field Name"
          :hint="!isEditing ? 'Click the icon to edit this field' : 'Click the tick to save this field'"
          :disabled="!isEditing"
-         :items="curatedFieldNames"
+         :items="fieldNames"
          item-text="fieldName"
          item-value="fieldType"
          :search-input.sync="searchInput"
          persistent-hint
-         v-model="selected">
+         @change="change"
+         v-model="selected"
+         return-object>
        </v-autocomplete>
       </v-col>
       <v-col :sm="7" :md="7" :lg="7" align="center">
@@ -44,6 +46,7 @@ export default {
   },
   data () {
     return {
+      fieldNames: this.curatedFieldNames,
       isEditing: this.newField,
       selected: [],
       searchInput: '',
@@ -51,15 +54,23 @@ export default {
       thumbnailData: '',
       showSingleLineTextField: false,
       showImage: false,
-      showThumbnail: false
+      showThumbnail: false,
+      showBigPhoto: false
+    }
+  },
+  methods: {
+    change (field) {
+      console.log(field)
     }
   },
   props: ['curatedFieldNames', 'newField'],
   watch: {
-    selected (fieldType) {
-      this.showSingleLineTextField = fieldType === 'singleLineText'
-      this.showImage = fieldType === 'image'
-      this.showThumbnail = fieldType === 'thumbnail'
+    selected (field) {
+      console.log(field.fieldType)
+      this.showSingleLineTextField = field.fieldType === 'singleLineText'
+      this.showImage = field.fieldType === 'image'
+      this.showThumbnail = field.fieldType === 'thumbnail'
+      this.showBigPhoto = field.fieldType === 'bigPhoto'
     }
   }
 }

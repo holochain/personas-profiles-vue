@@ -20,7 +20,7 @@ export const profileManager = () => {
         default: array('Music Folders', items)
       }
     },
-    template: `<profile-manager />`
+    template: `<profile-manager :items="items"/>`
   })
   return story
 }

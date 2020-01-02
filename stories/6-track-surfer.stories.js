@@ -25,5 +25,5 @@ export const trackSurfer = () => {
   return story
 }
 trackSurfer.story = {
-  name: 'Asych Chunks'
+  name: 'Load Peaks'
 }

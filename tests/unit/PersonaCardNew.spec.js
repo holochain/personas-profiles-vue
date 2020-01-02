@@ -34,7 +34,7 @@ export const personaCardNewTests = describe('New Persona', () => {
         personaTitle: 'New Persona'
       }
     })
-    const title = wrapper.find('.v-toolbar__title')
+    const title = wrapper.find('.v-list-item__title')
     expect(title.text()).toContain('New Persona')
   })
 })

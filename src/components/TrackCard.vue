@@ -1,10 +1,10 @@
 <template>
   <v-card class="mx-auto">
     <v-list-item class="ml-n3">
-      <v-list-item-avatar v-if="play" @click="pauseTrack">
+      <v-list-item-avatar v-if="isPlaying" @click="pauseTrack">
         <v-icon x-large>mdi-pause-circle-outline</v-icon>
       </v-list-item-avatar>
-      <v-list-item-avatar v-if="!play" @click="playTrack">
+      <v-list-item-avatar v-if="!isPlaying" @click="playTrack">
         <v-icon x-large>mdi-play-circle-outline</v-icon>
       </v-list-item-avatar>
       <v-list-item-content>
@@ -12,7 +12,7 @@
         <v-list-item-subtitle>by @philt3r</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
-    <track-surfer ref="track" :track="track" :play="play" @duration="updateDuration" @played="updatePlayed"/>
+    <track-surfer ref="track" :track="track" :play="isPlaying" @duration="updateDuration" @played="updatePlayed"/>
     <v-card-actions>
       <v-list-item class="grow">
         <v-row align="center" justify="end">
@@ -30,17 +30,17 @@
       <v-row no-gutters align-content="center">
         <v-col cols="4">
           <h2>{{ track.title }}</h2>
-          <v-btn icon>
+          <v-btn icon @click="this.$refs.track.skipBackward">
             <v-icon>mdi-skip-backward</v-icon>
           </v-btn>
-          <v-btn icon>
+          <v-btn icon @click="stopTrack">
             <v-icon>mdi-stop</v-icon>
           </v-btn>
           <v-btn icon>
-            <v-icon v-if="!play" @click="playTrack">mdi-play</v-icon>
-            <v-icon v-if="play" @click="pauseTrack">mdi-pause</v-icon>
+            <v-icon v-if="!isPlaying" @click="playTrack">mdi-play</v-icon>
+            <v-icon v-if="isPlaying" @click="pauseTrack">mdi-pause</v-icon>
           </v-btn>
-          <v-btn icon>
+          <v-btn icon @click="this.$refs.track.skipForward">
             <v-icon>mdi-skip-forward</v-icon>
           </v-btn>
         </v-col>
@@ -69,7 +69,7 @@ export default {
     return {
       duration: 0,
       played: 0,
-      play: false,
+      isPlaying: false,
       playerVisible: false,
       progress: 0
     }
@@ -78,16 +78,28 @@ export default {
   methods: {
     playTrack () {
       this.playerVisible = true
-      this.play = true
+      this.isPlaying = true
+      this.$emit('playing', this.track.id)
     },
-    pauseTrack () {
-      this.play = false
+    pauseTrack: function () {
+      if (this.isPlaying === true) {
+        this.isPlaying = false
+      }
+    },
+    stopTrack () {
+      this.$refs.track.stop()
+      this.isPlaying = false
+    },
+    pausedByOtherTrack: function () {
+      if (this.isPlaying === true) {
+        this.isPlaying = false
+      }
+      this.playerVisible = false
     },
     updateDuration: function (duration) {
       this.duration = (duration / 60).toFixed(2)
     },
     updatePlayed: function (played, source) {
-      // console.log('played event' + played + ' source:' + source)
       this.played = (played / 60).toFixed(2)
       this.progress = this.played / this.duration * 100
     }
