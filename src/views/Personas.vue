@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-app-bar app>
+    <v-app-bar app clipped-left>
       <v-toolbar>
         <v-toolbar-title>Personas</v-toolbar-title>
         <v-spacer></v-spacer>

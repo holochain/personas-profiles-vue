@@ -27,21 +27,21 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-slide-x-reverse-transition mode="out-in">
-        <v-icon
-          :key="`icon-${isEditing}`"
-          :color="isEditing ? 'success' : 'info'"
-          @click="isEditing = !isEditing"
-          v-text="isEditing ? 'mdi-check-outline' : 'mdi-circle-edit-outline'">
-        </v-icon>
+        <v-btn icon :color="isEditing ? 'success' : 'info'" @click="isEditing = !isEditing">{{isEditing ? 'save' : 'edit'}}
+          <v-icon
+            :key="`icon-${isEditing}`"
+            :color="isEditing ? 'success' : 'info'"
+            v-text="isEditing ? 'mdi-check-outline' : 'mdi-circle-edit-outline'">
+          </v-icon>
+        </v-btn>
       </v-slide-x-reverse-transition>
       <v-slide-x-reverse-transition mode="out-in" v-if="isEditing">
-        <v-dialog v-model="dialog" persistent max-width="290">
+        <v-dialog key="delete" v-model="dialog" persistent max-width="290">
            <template v-slot:activator="{ on }">
-             <v-icon
-               key="icon-delete"
-               color="error"
-               v-on="on">mdi-delete
-             </v-icon>
+             <v-btn color="red darken-1" dark icon v-on="on">Delete
+               <v-icon key="icon-delete" color="error">mdi-delete
+               </v-icon>
+             </v-btn>
            </template>
            <v-card>
              <v-card-title class="headline">Delete the field</v-card-title>
@@ -49,7 +49,26 @@
              <v-card-actions>
                <v-spacer></v-spacer>
                <v-btn color="green darken-1" text @click="dialog = false">Cancel</v-btn>
-               <v-btn color="green darken-1" text @click="deleteField()">Proceed</v-btn>
+               <v-btn color="red darken-1" text @click="deleteField()">Proceed</v-btn>
+             </v-card-actions>
+           </v-card>
+         </v-dialog>
+      </v-slide-x-reverse-transition>
+      <v-slide-x-reverse-transition mode="out-in" v-if="isEditing">
+        <v-dialog key="move" v-model="moveDialog" persistent max-width="290">
+           <template v-slot:activator="{ on }">
+             <v-btn color="red darken-1" dark icon v-on="on">Move
+               <v-icon key="icon-move" color="error">mdi-cursor-move
+               </v-icon>
+             </v-btn>
+           </template>
+           <v-card>
+             <v-card-title class="headline">Move the field</v-card-title>
+             <v-card-text>This will move the {{this.selected.fieldName}} field.</v-card-text>
+             <v-card-actions>
+               <v-spacer></v-spacer>
+               <v-btn color="green darken-1" text @click="moveDialog = false">Cancel</v-btn>
+               <v-btn color="red darken-1" text @click="moveField()">Proceed</v-btn>
              </v-card-actions>
            </v-card>
          </v-dialog>
@@ -70,6 +89,7 @@ export default {
   data () {
     return {
       dialog: false,
+      moveDialog: false,
       fieldNames: curatedFieldNames,
       isEditing: this.newField,
       selected: [],
@@ -92,6 +112,12 @@ export default {
       console.log(this.selectedPersonaField)
       this.dialog = false
       this.$emit('delete-persona-field', this.selected)
+    },
+    moveField () {
+      console.log('move')
+      console.log(this.selectedPersonaField)
+      this.moveDialog = false
+      this.$emit('move-persona-field', this.selected)
     }
   },
   props: ['newField', 'personaFieldValue'],
