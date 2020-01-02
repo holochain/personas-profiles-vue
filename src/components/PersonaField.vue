@@ -29,9 +29,11 @@
        </v-autocomplete>
       </v-col>
       <v-col :sm="7" :md="7" :lg="7" align="center">
-        <v-text-field id="showSingleLineTextField" :disabled="!isEditing" label="Enter Field Value" :hint="'Enter your ' + searchInput" persistent-hint v-if="showSingleLineTextField"></v-text-field>
-        <v-image-input v-model="imageData" :disabled="!isEditing" :image-quality="0.85" clearable image-format="jpeg,png" v-if="showImage" />
-        <v-image-input v-model="thumbnailData" :disabled="!isEditing" :image-quality="0.85" clearable image-format="jpeg,png" v-if="showThumbnail" :image-height="100" :image-width="100" />
+        <v-text-field v-model="selectedData" id="showSingleLineTextField" :disabled="!isEditing" label="Enter Field Value" :hint="'Enter your ' + searchInput" persistent-hint v-if="showSingleLineTextField"></v-text-field>
+        <v-image-input v-model="selectedData" :disabled="!isEditing" :image-quality="0.85" clearable image-format="jpeg,png" v-if="showImage && isEditing" />
+        <v-img :src="selectedData" v-if="showImage && !isEditing" />
+        <v-image-input v-model="selectedData" :disabled="!isEditing" :image-quality="0.85" clearable image-format="jpeg,png" v-if="showThumbnail && isEditing" :image-height="100" :image-width="100" />
+        <v-img :src="selectedData" height="100px" width="100px" v-if="showThumbnail && !isEditing" />
       </v-col>
     </v-row>
   </v-container>
@@ -39,6 +41,8 @@
 
 <script>
 import VImageInput from 'vuetify-image-input/a-la-carte'
+import { curatedFieldNames } from '../../test-data/curated-field-names.js'
+
 export default {
   name: 'PersonaField',
   components: {
@@ -46,16 +50,16 @@ export default {
   },
   data () {
     return {
-      fieldNames: this.curatedFieldNames,
+      fieldNames: curatedFieldNames,
       isEditing: this.newField,
       selected: [],
       searchInput: '',
-      imageData: '',
-      thumbnailData: '',
+      selectedData: {},
       showSingleLineTextField: false,
       showImage: false,
       showThumbnail: false,
-      showBigPhoto: false
+      showBigPhoto: false,
+      selectedPersonaField: this.personaFieldValue
     }
   },
   methods: {
@@ -63,14 +67,36 @@ export default {
       console.log(field)
     }
   },
-  props: ['curatedFieldNames', 'newField'],
+  props: ['newField', 'personaFieldValue'],
   watch: {
     selected (field) {
       console.log(field.fieldType)
+      if (field.fieldType === undefined) {
+        this.isEditing = true
+      }
       this.showSingleLineTextField = field.fieldType === 'singleLineText'
       this.showImage = field.fieldType === 'image'
       this.showThumbnail = field.fieldType === 'thumbnail'
       this.showBigPhoto = field.fieldType === 'bigPhoto'
+      console.log(this.showSingleLineTextField)
+    },
+    isEditing (save) {
+      console.log('save ' + save)
+      if (!save) {
+        console.log('Saving ')
+        console.log(this.selected)
+        console.log(' data ')
+        console.log(this.selectedData)
+      }
+    }
+  },
+  mounted () {
+    if (this.personaFieldValue) {
+      let fieldName = this.selectedPersonaField.fieldName
+      let fieldType = this.selectedPersonaField.fieldType
+      console.log({ fieldName: fieldName, fieldType: fieldType })
+      this.selected = { fieldName: fieldName, fieldType: fieldType }
+      this.selectedData = this.selectedPersonaField.fieldValue
     }
   }
 }
