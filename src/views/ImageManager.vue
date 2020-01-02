@@ -1,10 +1,10 @@
 <template>
-  <image-manager :photos="photos"/>
+  <image-manager :items="items"/>
 </template>
 
 <script>
 import ImageManager from '../components/ImageManager.vue'
-import { photos } from '../../test-data/image-manager.js'
+import { items } from '../../test-data/image-manager.js'
 
 export default {
   name: 'Images',
@@ -13,7 +13,7 @@ export default {
   },
   data () {
     return {
-      photos: photos
+      items: items
     }
   }
 }

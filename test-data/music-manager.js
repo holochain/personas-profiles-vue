@@ -35,10 +35,19 @@ export const items = [
         ]
       },
       {
-        name: 'DJ Mixes',
-        path: '@philt3r/DJ Mixes',
-        id: 'QmhashyFolder1',
-        tracks: []
+        name: 'Videos',
+        path: '@philt3r/Videos',
+        id: 'QmhashyVFolder1',
+        videos: [
+          {
+            title: 'KaTgirl & @philt3r',
+            id: 'QmhashyStuff13',
+            playing: false,
+            src: './vid/MAH00259.mp4',
+            duration: 0,
+            pcm: []
+          }
+        ]
       },
       {
         name: 'Stems',

@@ -47,6 +47,11 @@ export default new Router({
       path: '/music-manager',
       name: 'music-manager',
       component: () => import(/* webpackChunkName: "music-manager" */ './views/MusicManager.vue')
+    },
+    {
+      path: '/track-card',
+      name: 'track-card',
+      component: () => import(/* webpackChunkName: "track-card" */ './views/TrackCard.vue')
     }
   ]
 })

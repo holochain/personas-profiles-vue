@@ -1,8 +1,9 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import PersonaField from '../../src/components/PersonaField.vue'
+import { curatedFieldNames } from '../../test-data/curated-field-names.js'
 const localVue = createLocalVue()
 
-export const personaFieldTests = describe('Persona Field', () => {
+export const personaFieldTests = describe('New Field', () => {
   const mountFunction = options => {
     return mount(PersonaField, {
       localVue,
@@ -19,7 +20,7 @@ export const personaFieldTests = describe('Persona Field', () => {
   it('Renders without crashing', () => {
     const wrapper = mountFunction({
       propsData: {
-        curatedFieldNames: [{ fieldName: 'Full Name', fieldType: 'text' }, { fieldName: 'Avatar', fieldType: 'image' }]
+        curatedFieldNames: curatedFieldNames
       }
     })
     const fieldNames = wrapper.find('.v-autocomplete')
@@ -29,10 +30,10 @@ export const personaFieldTests = describe('Persona Field', () => {
   it('Selecting a text type of field shows a text input', done => {
     const wrapper = mountFunction({
       propsData: {
-        curatedFieldNames: [{ fieldName: 'Full Name', fieldType: 'singleLineText' }, { fieldName: 'Avatar', fieldType: 'image' }]
+        curatedFieldNames: curatedFieldNames
       }
     })
-    wrapper.vm.selected = 'singleLineText'
+    wrapper.vm.selected = { fieldName: 'Full Name', fieldType: 'singleLineText' }
     wrapper.vm.$nextTick(() => {
       expect(wrapper.vm.showSingleLineTextField).toBe(true)
       expect(wrapper.find('.v-text-field').exists()).toBe(true)
