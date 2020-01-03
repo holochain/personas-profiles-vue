@@ -1,6 +1,5 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import PersonaField from '../../src/components/PersonaField.vue'
-import { curatedFieldNames } from '../../test-data/curated-field-names.js'
 const localVue = createLocalVue()
 
 export const newPersonaFieldTests = describe('New Field', () => {
@@ -18,12 +17,9 @@ export const newPersonaFieldTests = describe('New Field', () => {
   }
 
   it('Renders without crashing', () => {
-    const wrapper = mountFunction({
-      propsData: {
-        curatedFieldNames: curatedFieldNames
-      }
-    })
+    const wrapper = mountFunction({})
     const fieldNames = wrapper.find('.v-autocomplete')
+    console.log(fieldNames.props('items'))
     expect(fieldNames.props('items')[0].fieldName).toBe('Full Name')
   })
 
@@ -57,11 +53,7 @@ export const existingPersonaFieldTests = describe('Existing Field', () => {
   }
 
   it('Renders without crashing', () => {
-    const wrapper = mountFunction({
-      propsData: {
-        curatedFieldNames: curatedFieldNames
-      }
-    })
+    const wrapper = mountFunction({})
     const fieldNames = wrapper.find('.v-autocomplete')
     expect(fieldNames.props('items')[0].fieldName).toBe('Full Name')
   })

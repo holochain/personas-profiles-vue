@@ -3,17 +3,18 @@
     <v-row align="center" justify="start" class="pa-1">
       <v-col cols="4">
         <v-autocomplete
-         label="Select a Field Name"
-         :hint="!isEditing ? 'Click the icon to edit this field' : 'Click the tick to save this field'"
-         :disabled="!isEditing"
-         :items="fieldNames"
-         item-text="fieldName"
-         item-value="fieldType"
-         :search-input.sync="searchInput"
-         persistent-hint
-         @change="change"
-         v-model="selected"
-         return-object>
+          label="Select a Field Name"
+          :hint="!isEditing ? 'Click the icon to edit this field' : 'Click the tick to save this field'"
+          :disabled="!isEditing"
+          v-bind:items="autocompleteFieldNames"
+          item-text="fieldName"
+          item-value="anchor"
+          :search-input.sync="searchInput"
+          persistent-hint
+          no-filter
+          @change="change"
+          v-model="selected"
+          return-object>
        </v-autocomplete>
       </v-col>
       <v-col cols="8" align="center">
@@ -39,7 +40,8 @@
         <v-dialog key="delete" v-model="dialog" persistent max-width="290">
            <template v-slot:activator="{ on }">
              <v-btn color="red darken-1" dark icon v-on="on">Delete
-               <v-icon key="icon-delete" color="error">mdi-delete
+               <v-icon
+                 key="icon-delete" color="error">mdi-delete
                </v-icon>
              </v-btn>
            </template>
@@ -79,7 +81,7 @@
 
 <script>
 import VImageInput from 'vuetify-image-input/a-la-carte'
-import { curatedFieldNames } from '../../test-data/curated-field-names.js'
+import { fieldNames } from '../../test-data/field-names.js'
 
 export default {
   name: 'PersonaField',
@@ -90,11 +92,11 @@ export default {
     return {
       dialog: false,
       moveDialog: false,
-      fieldNames: curatedFieldNames,
+      autocompleteFieldNames: fieldNames,
       isEditing: this.newField,
       selected: [],
-      searchInput: '',
-      selectedData: {},
+      searchInput: null,
+      selectedData: '',
       showSingleLineTextField: false,
       showImage: false,
       showThumbnail: false,
@@ -106,6 +108,10 @@ export default {
     change (field) {
       console.log('change')
       console.log(field)
+      let that = this
+      this.$nextTick(() => {
+        console.log(that.autocompleteFieldNames)
+      })
     },
     deleteField () {
       console.log('delete')
@@ -143,9 +149,10 @@ export default {
   },
   mounted () {
     if (this.personaFieldValue) {
-      let fieldName = this.selectedPersonaField.fieldName
-      let fieldType = this.selectedPersonaField.fieldType
-      this.selected = { fieldName: fieldName, fieldType: fieldType }
+      let anchor = this.personaFieldValue.anchor
+      let fieldName = this.personaFieldValue.fieldName
+      let fieldType = this.personaFieldValue.fieldType
+      this.selected = { anchor: anchor, fieldName: fieldName, fieldType: fieldType }
       this.selectedData = this.selectedPersonaField.fieldValue
     }
   }

@@ -22,16 +22,11 @@
 </template>
 
 <script>
-import { curatedFieldNames } from '../../test-data/curated-field-names.js'
-
 export default {
   name: 'PersonaCard',
   components: {
 
   },
-  data: () => ({
-    curatedFieldNames: curatedFieldNames
-  }),
   props: ['profileTitle', 'cardImage']
 }
 </script>
