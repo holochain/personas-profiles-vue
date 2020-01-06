@@ -2,13 +2,7 @@
   <v-container fluid>
     <v-row dense>
       <v-col  :sm="12" :md="6" :lg="6">
-        <persona-card personaTitle="@philt3r" />
-      </v-col>
-      <v-col  :sm="12" :md="6" :lg="6">
-        <persona-card personaTitle="Personal" />
-      </v-col>
-      <v-col  :sm="12" :md="6" :lg="6">
-        <persona-card personaTitle="Professional" />
+        <persona-card :persona="personas[0]" />
       </v-col>
     </v-row>
     <v-footer app>
@@ -19,11 +13,17 @@
 
 <script>
 import PersonaCard from '../components/PersonaCard.vue'
+import { personas } from '../../test-data/personas.js'
 
 export default {
   name: 'Personas',
   components: {
     PersonaCard
+  },
+  data () {
+    return {
+      personas: personas
+    }
   }
 }
 </script>

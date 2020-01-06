@@ -1,12 +1,16 @@
 import { storyFactory } from '../.storybook/util/helpers'
-import { array } from '@storybook/addon-knobs'
+import { object } from '@storybook/addon-knobs'
 // import { action } from '@storybook/addon-actions'
 // import { linkTo } from '@storybook/addon-links'
 import { specs } from 'storybook-addon-specifications'
 import PersonaField from '../src/components/PersonaField.vue'
-import { personaFieldTests } from '../tests/unit/PersonaField.spec'
+import { newPersonaFieldTests, existingPersonaFieldTests } from '../tests/unit/PersonaField.spec'
 import personaNewFieldNotes from './notes/persona-field-new.md'
-import { curatedFieldNames } from '../test-data/curated-field-names.js'
+import { personas } from '../test-data/personas.js'
+const personaFieldValue0 = personas[0].fields[0]
+const personaFieldValue1 = personas[0].fields[1]
+const personaFieldValue2 = personas[0].fields[2]
+const personaFieldValue3 = personas[0].fields[3]
 
 export default {
   title: 'Persona Field',
@@ -16,35 +20,64 @@ export default {
 }
 
 const storyComponent = storyFactory({ PersonaField })
-
 export const newField = () => {
   const story = storyComponent({
-    props: {
-      curatedFieldNames: {
-        default: array('Field Names', curatedFieldNames)
-      }
-    },
-    template: `<persona-field :newField="true" :curatedFieldNames="curatedFieldNames"></persona-field>`
+    template: `<persona-field :newField="true"></persona-field>`
   })
-  specs(() => personaFieldTests)
+  specs(() => newPersonaFieldTests)
   return story
 }
 newField.story = {
   name: 'New Field'
 }
 
-export const existingField = () => {
+export const existingSingleLineTextField = () => {
   const story = storyComponent({
     props: {
-      curatedFieldNames: {
-        default: array('Field Names', curatedFieldNames)
+      personaFieldValue: {
+        default: object('Field', personaFieldValue1)
       }
     },
-    template: `<persona-field :newField="false" :curatedFieldNames="curatedFieldNames"></persona-field>`
+    template: `<persona-field key="singleLineText" :newField="false" :personaFieldValue="personaFieldValue"></persona-field>`
   })
-  specs(() => personaFieldTests)
+  console.log(personaFieldValue1)
+  specs(() => existingPersonaFieldTests)
   return story
 }
-existingField.story = {
-  name: 'Existing Field'
+existingSingleLineTextField.story = {
+  name: 'Existing Single Line Text Field'
+}
+
+export const existingAvatarField = () => {
+  const story = storyComponent({
+    props: {
+      personaFieldValue: {
+        default: object('Field', personaFieldValue0)
+      }
+    },
+    template: `<persona-field key="avatar" :newField="false" :personaFieldValue="personaFieldValue"></persona-field>`
+  })
+  console.log(personaFieldValue0)
+  // specs(() => existingPersonaFieldTests)
+  return story
+}
+existingAvatarField.story = {
+  name: 'Existing Avatar Field'
+}
+
+export const existingBigPhotoField = () => {
+  const story = storyComponent({
+    props: {
+      personaFieldValue: {
+        default: object('Field', personaFieldValue3)
+      }
+    },
+    template: `<persona-field key="multiLineText" :newField="false" :personaFieldValue="personaFieldValue"></persona-field>`
+  })
+  console.log(personaFieldValue2)
+  // specs(() => existingPersonaFieldTests)
+  return story
+}
+existingBigPhotoField.story = {
+  name: 'Existing Big Photo Field'
 }
