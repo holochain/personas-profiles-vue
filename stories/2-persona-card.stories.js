@@ -6,7 +6,7 @@ import { specs } from 'storybook-addon-specifications'
 import PersonaCard from '../src/components/PersonaCard.vue'
 import { personaCardNewTests } from '../tests/unit/PersonaCardNew.spec'
 import personaNewNotes from './notes/persona-card-new.md'
-import { personas } from '../test-data/personas.js'
+import { personas, newPersona } from '../test-data/personas.js'
 
 export default {
   title: 'Persona Card',
@@ -16,6 +16,22 @@ export default {
 }
 
 const storyComponent = storyFactory({ PersonaCard })
+
+export const newPersonaStory = () => {
+  const story = storyComponent({
+    props: {
+      persona: {
+        default: object('Persona', newPersona)
+      }
+    },
+    template: `<persona-card :persona="persona" />`
+  })
+  // specs(() => personaCardNewTests)
+  return story
+}
+newPersonaStory.story = {
+  name: 'New Persona'
+}
 
 export const defaultHolochainPersona = () => {
   const story = storyComponent({

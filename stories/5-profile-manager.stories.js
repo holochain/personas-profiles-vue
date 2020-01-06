@@ -25,5 +25,15 @@ export const profileManager = () => {
   return story
 }
 profileManager.story = {
-  name: 'List'
+  name: 'Website'
+}
+
+export const profileSpecManager = () => {
+  const story = storyComponent({
+    template: ``
+  })
+  return story
+}
+profileSpecManager.story = {
+  name: 'Spec Builder'
 }

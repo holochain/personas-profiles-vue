@@ -2,6 +2,7 @@ import { mount, createLocalVue } from '@vue/test-utils'
 import PersonaCard from '../../src/components/PersonaCard.vue'
 import VueRouter from 'vue-router'
 import Vuetify from 'vuetify'
+import { personas } from '../../test-data/personas.js'
 
 const localVue = createLocalVue()
 localVue.use(VueRouter)
@@ -31,10 +32,10 @@ export const personaCardNewTests = describe('New Persona', () => {
   it('Renders without crashing', () => {
     const wrapper = mountFunction({
       propsData: {
-        personaTitle: 'New Persona'
+        persona: personas[1]
       }
     })
     const title = wrapper.find('.v-list-item__title')
-    expect(title.text()).toContain('New Persona')
+    expect(title.text()).toContain('Persona - Holochain')
   })
 })

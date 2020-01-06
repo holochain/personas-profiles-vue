@@ -18,11 +18,11 @@ export default new Router({
       name: 'about',
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
-    {
-      path: '/persona',
-      name: 'persona',
-      component: () => import(/* webpackChunkName: "persona" */ './views/Persona.vue')
-    },
+    // {
+    //   path: '/persona',
+    //   name: 'persona',
+    //   component: () => import(/* webpackChunkName: "persona" */ './views/Persona.vue')
+    // },
     {
       path: '/personas',
       name: 'personas',
