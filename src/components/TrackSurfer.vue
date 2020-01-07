@@ -15,11 +15,10 @@ export default {
   },
   data () {
     return {
-      playedTime: 0,
       wavesurfer: {}
     }
   },
-  props: ['track', 'play'],
+  props: ['track', 'play', 'playedTime'],
   methods: {
     skipForward: function () {
       console.log('skip f')
@@ -35,6 +34,11 @@ export default {
       console.log('stop')
       this.wavesurfer.stop()
       this.$emit('played', 0, 'stop')
+    },
+    setCurrentTime: function (playedTime) {
+      console.log('setCurrentTime')
+
+      this.wavesurfer.setCurrentTime(playedTime)
     }
   },
   mounted: function () {
