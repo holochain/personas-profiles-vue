@@ -1,21 +1,21 @@
 import { mount, createLocalVue } from '@vue/test-utils'
-import PersonaCard from '../../src/components/PersonaCard.vue'
+import ProfileSpecBuilder from '../../src/components/ProfileSpecBuilder.vue'
 import VueRouter from 'vue-router'
 import Vuetify from 'vuetify'
-import { personas } from '../../test-data/personas.js'
+import { profileSpecs } from '../../test-data/profile-specs.js'
 
 const localVue = createLocalVue()
 localVue.use(VueRouter)
 const router = new VueRouter()
 
-export const personaCardNewTests = describe('New Persona', () => {
+export const profileSpecBuilderNewTests = describe('New Profile Spec', () => {
   let vuetify
   beforeEach(() => {
     vuetify = new Vuetify()
   })
 
   const mountFunction = options => {
-    return mount(PersonaCard, {
+    return mount(ProfileSpecBuilder, {
       localVue,
       vuetify,
       router,
@@ -32,10 +32,10 @@ export const personaCardNewTests = describe('New Persona', () => {
   it('Renders without crashing', () => {
     const wrapper = mountFunction({
       propsData: {
-        persona: personas[1]
+        profileSpec: profileSpecs[0]
       }
     })
     const title = wrapper.find('.v-list-item__title')
-    expect(title.text()).toContain('Persona - Personal')
+    expect(title.text()).toContain('Profile Spec - Cat Owner')
   })
 })

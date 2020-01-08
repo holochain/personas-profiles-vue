@@ -106,7 +106,7 @@ export default {
       // fields for Holochain entry
       // console.log(this.persona)
       // console.log(field)
-      // console.log(fieldData)
+      console.log(fieldData)
     },
     deleteField (field) {
       console.log('delete field')

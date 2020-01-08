@@ -19,7 +19,7 @@ export const newPersonaFieldTests = describe('New Field', () => {
   it('Renders without crashing', () => {
     const wrapper = mountFunction({})
     const fieldNames = wrapper.find('.v-autocomplete')
-    console.log(fieldNames.props('items'))
+    // console.log(fieldNames.props('items'))
     expect(fieldNames.props('items')[0].fieldName).toBe('Full Name')
   })
 

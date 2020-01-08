@@ -18,7 +18,8 @@
           :items="items"
           activatable
           item-key="name"
-          open-on-click>
+          open-on-click
+          open-all>
           <template v-slot:prepend="{ item, open }">
             <v-btn icon @click="listTracks(item)">
               <v-icon>

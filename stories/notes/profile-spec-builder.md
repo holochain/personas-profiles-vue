@@ -1,0 +1,2 @@
+Creating a profile spec is similar to creating a persona, you simply add the fields you want in the profile. The main difference is that as the hApp developer and profile designer you need to explain to the person filling out the profile for your hApp why you want their information and how you are going to use it.
+Using the Profile Spec Builder anyone can design a new Profile Spec which can be used in a hApp as a Profile or in the Website Builder.

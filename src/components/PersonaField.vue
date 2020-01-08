@@ -18,7 +18,7 @@
        </v-autocomplete>
       </v-col>
       <v-col cols="8" align="center">
-        <v-text-field v-model="selectedData" id="showSingleLineTextField" :disabled="!isEditing" label="Enter Field Value" :hint="'Enter your ' + searchInput" persistent-hint v-if="showSingleLineTextField"></v-text-field>
+        <v-text-field v-model="selectedData" :disabled="!isEditing" label="Enter Field Value" :hint="'Enter your ' + searchInput" persistent-hint v-if="showSingleLineTextField"></v-text-field>
         <v-image-input v-model="selectedData" :disabled="!isEditing" :image-quality="0.85" clearable image-format="jpeg,png" v-if="showImage && isEditing" />
         <v-img :src="selectedData" v-if="showImage && !isEditing" />
         <v-image-input v-model="selectedData" :disabled="!isEditing" :image-quality="0.85" clearable image-format="jpeg,png" v-if="showThumbnail && isEditing" :image-height="100" :image-width="100" />

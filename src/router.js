@@ -34,6 +34,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "profile" */ './views/Profile.vue')
     },
     {
+      path: '/profile-specs',
+      name: 'profile-specs',
+      component: () => import(/* webpackChunkName: "profile spec" */ './views/ProfileSpecs.vue')
+    },
+    {
       path: '/image-manager',
       name: 'image-manager',
       component: () => import(/* webpackChunkName: "image-manager" */ './views/ImageManager.vue')

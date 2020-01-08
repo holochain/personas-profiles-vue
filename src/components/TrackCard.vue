@@ -7,17 +7,31 @@
       <v-list-item-avatar v-if="!isPlaying" @click="playTrack">
         <v-icon x-large>mdi-play-circle-outline</v-icon>
       </v-list-item-avatar>
-      <v-list-item-content>
+      <v-list-item-content align="start">
         <v-list-item-title class="headline" v-text="track.title"></v-list-item-title>
         <v-list-item-subtitle>by @philt3r</v-list-item-subtitle>
       </v-list-item-content>
+      <v-list-item-action>
+        <v-btn icon>
+          <template>
+            <img src="img/icons/holo-h.png" style="height: 20px">
+            Earned $47.45
+          </template>
+        </v-btn>
+      </v-list-item-action>
+      <v-list-item-action>
+        <v-btn icon>
+          <template>
+            <img src="img/holochain-circle.png" style="height: 30px">
+          </template>
+        </v-btn>
+      </v-list-item-action>
     </v-list-item>
-    <track-surfer ref="track" :track="track" :play="isPlaying" @duration="updateDuration" @played="updatePlayed"/>
+    <track-surfer ref="track" :track="track" :play="isPlaying" @duration="updateDuration" @played="updatePlayed" class="ml-2 mr-2"/>
     <v-card-actions>
       <v-list-item class="grow">
         <v-row align="center" justify="end">
-          <span class="subheading mr-2">Played {{this.played}} min</span>
-          <span class="subheading mr-2">of {{this.duration}} min</span>
+          <span class="subheading mr-2">{{this.formattedDuration}}</span>
           <v-icon class="mr-1">mdi-heart</v-icon>
           <span class="subheading mr-2">256</span>
           <span class="mr-1">·</span>
@@ -48,7 +62,14 @@
           <v-container bg fill-height grid-list-md text-xs-center>
             <v-layout row wrap align-center>
               <v-flex>
-                <v-progress-linear height="10" striped v-model="progress" />
+                <v-slider v-model="progress" @change="setCurrentTime" track-color="grey" always-dirty min="0" max="100">
+                  <template v-slot:prepend>
+                    <span>{{formattedPlayed}}</span>
+                  </template>
+                  <template v-slot:append>
+                    <span>{{formattedTimeLeft}}</span>
+                  </template>
+                </v-slider>
               </v-flex>
             </v-layout>
           </v-container>
@@ -68,7 +89,10 @@ export default {
   data () {
     return {
       duration: 0,
+      formattedDuration: '',
       played: 0,
+      formattedPlayed: '',
+      formattedTimeLeft: '',
       isPlaying: false,
       playerVisible: false,
       progress: 0
@@ -96,12 +120,36 @@ export default {
       }
       this.playerVisible = false
     },
+    formatTime (duration) {
+      let d = Number(duration)
+      let h = Math.floor(d / 3600)
+      let m = Math.floor(d % 3600 / 60)
+      let s = Math.floor(d % 3600 % 60).toFixed(0)
+      let hDisplay = h > 0 ? ('0' + h).slice(-2) + ':' : ''
+      let mDisplay = ('0' + m).slice(-2) + ':'
+      let sDisplay = ('0' + s).slice(-2)
+      if (this.duration > 3600) {
+        return hDisplay + mDisplay + sDisplay
+      } else if (this.duration > 60) {
+        return mDisplay + sDisplay
+      } else {
+        return sDisplay
+      }
+    },
     updateDuration: function (duration) {
-      this.duration = (duration / 60).toFixed(2)
+      this.duration = duration // (duration / 60).toFixed(2)
+      this.formattedDuration = this.formatTime(duration)
+      this.formattedPlayed = this.formatTime(0)
+      this.formattedTimeLeft = this.formatTime(duration)
     },
     updatePlayed: function (played, source) {
-      this.played = (played / 60).toFixed(2)
+      this.played = played
+      this.formattedPlayed = this.formatTime(played)
+      this.formattedTimeLeft = this.formatTime(this.duration - played)
       this.progress = this.played / this.duration * 100
+    },
+    setCurrentTime: function () {
+      this.$refs.track.setCurrentTime(this.progress * this.duration / 100)
     }
   }
 }
