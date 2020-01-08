@@ -11,7 +11,7 @@
       </v-toolbar>
     </v-app-bar>
     <v-row dense>
-      <v-col v-for="(profileSpec) in profileSpecs" :key="profileSpec.id" cols="6">
+      <v-col v-for="(profileSpec) in profileSpecs" :key="profileSpec.id" cols="12">
         <profile-spec-builder :key="profileSpec.id" :profileSpec="profileSpec" @delete-profile-spec="deleteProfileSpec"/>
       </v-col>
     </v-row>

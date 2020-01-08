@@ -17,9 +17,8 @@
       </template>
      </v-list-item-avatar>
      <v-list-item-content>
-       <v-text-field v-model="persona.title" id="showSingleLineTextField" class="ml-2" :disabled="!isEditing" label="Enter Field Value" :hint="'Enter your Persona Title'" persistent-hint v-if="isEditing"></v-text-field>
-
-       <v-list-item-title class="headline ml-2" v-if="!isEditing">Persona - {{ persona.title }}</v-list-item-title>
+       <v-text-field v-model="profile.title" id="showSingleLineTextField" class="ml-2" :disabled="!isEditing" label="Enter Field Value" :hint="'Enter your Profile Title'" persistent-hint v-if="isEditing"></v-text-field>
+       <v-list-item-title class="headline ml-2" v-if="!isEditing">Profile - {{ profile.title }}</v-list-item-title>
        <v-list-item-subtitle></v-list-item-subtitle>
      </v-list-item-content>
      <v-list-item-action v-if="isEditing">
@@ -32,18 +31,18 @@
             </v-icon>
           </template>
           <v-card>
-            <v-card-title class="headline">Delete the persona</v-card-title>
-            <v-card-text>This will remove {{persona.title}}.</v-card-text>
+            <v-card-title class="headline">Delete the profile</v-card-title>
+            <v-card-text>This will remove {{profile.title}}.</v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="green darken-1" text @click="dialog = false">Cancel</v-btn>
-              <v-btn color="green darken-1" text @click="deletePersona(persona)">Proceed</v-btn>
+              <v-btn color="green darken-1" text @click="deleteProfile(profile)">Proceed</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
      </v-list-item-action>
      <v-list-item-action>
-       <v-btn icon @click="addPersonaField(persona)">
+       <v-btn icon @click="addProfileField(profile)">
          <v-icon>mdi-plus</v-icon>
        </v-btn>
      </v-list-item-action>
@@ -69,42 +68,42 @@
       src="/img/holochain-circle.png">
     </v-img> -->
     <v-container class="fill-height ma-0 pl-5" fluid>
-      <v-col v-for="(field) in personaFields" :key="field.fieldName" cols="12">
-        <persona-field :personaFieldValue="field" @save-persona-field="saveField" @delete-persona-field="deleteField"/>
+      <v-col v-for="(field) in profileFields" :key="field.fieldName" cols="12">
+        <profile-field :profileFieldValue="field" @save-profile-field="saveField" @delete-profile-field="deleteField"/>
       </v-col>
     </v-container>
   </v-card>
 </template>
 
 <script>
-import PersonaField from './PersonaField'
+import ProfileField from './ProfileField'
 export default {
-  name: 'PersonaCard',
+  name: 'ProfileCard',
   components: {
-    PersonaField
+    ProfileField
   },
-  props: ['persona'],
+  props: ['profile'],
   data () {
     return {
-      personaFields: this.persona.fields,
+      profileFields: this.profile.fields,
       isEditing: '',
-      avatarData: this.persona.fields[0].fieldValue,
+      avatarData: this.profile.fields[0].fieldValue,
       dialog: false
     }
   },
   methods: {
-    addPersonaField (persona) {
-      console.log(persona)
-      this.persona.fields.push({})
+    addProfileField (profile) {
+      console.log(profile)
+      this.profile.fields.push({})
     },
     saveField (field, fieldData) {
-      field.personaId = this.persona.id
+      field.profileId = this.profile.id
       console.log(field.fieldName)
       if (field.fieldName === 'Avatar') {
         this.avatarData = fieldData
       }
       // fields for Holochain entry
-      // console.log(this.persona)
+      // console.log(this.profile)
       // console.log(field)
       console.log(fieldData)
     },
@@ -112,12 +111,12 @@ export default {
       console.log('delete field')
       let fieldName = field.fieldName
       console.log(fieldName)
-      this.personaFields = this.personaFields.filter(function (field) {
+      this.profileFields = this.profileFields.filter(function (field) {
         return field.fieldName !== fieldName
       })
     },
-    deletePersona (persona) {
-      this.$emit('delete-persona', persona)
+    deleteProfile (profile) {
+      this.$emit('delete-profile', profile)
     }
   }
 }

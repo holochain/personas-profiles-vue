@@ -25,13 +25,32 @@ export const newField = () => {
         default: text('Profile Name', profiles[0].name)
       }
     },
-    template: `<profile-field :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
+    template: `<profile-field size="thumbnail" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
   })
   // specs(() => newProfileFieldTests)
   return story
 }
 newField.story = {
   name: 'Avatar Not Mapped Yet'
+}
+
+export const existingAvatarField = () => {
+  const story = storyComponent({
+    props: {
+      profileFieldValue: {
+        default: object('Profile Field', profiles[1].fields[1])
+      },
+      profileName: {
+        default: text('Profile Name', profiles[1].name)
+      }
+    },
+    template: `<profile-field size="thumbnail" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
+  })
+  // specs(() => existingProfileFieldTests)
+  return story
+}
+existingAvatarField.story = {
+  name: 'Existing Avatar Field'
 }
 
 export const newImageField = () => {
@@ -44,7 +63,7 @@ export const newImageField = () => {
         default: text('Profile Name', profiles[0].name)
       }
     },
-    template: `<profile-field :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
+    template: `<profile-field size="image" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
   })
   // specs(() => newProfileFieldTests)
   return story

@@ -41,36 +41,50 @@ export const profiles = [
     ]
   },
   {
-    id: 'QmhashyProfile2',
-    name: 'Cat Owners of Toowoomba Filled Out',
+    id: 'Qmhashyphilt3rProfile',
+    name: '@philt3r website',
     fields: [
       {
-        anchor: 'preferred_username',
-        fieldName: 'Handle',
+        anchor: 'stage-name',
+        fieldName: 'Stage Name',
         linkContract: 'persist',
-        description: 'How you are referenced in chat',
-        mapping: {}
+        description: 'Alter ego for behinds the decks',
+        mapping: { 'persona': '@philt3r', 'tag': 'stage-name' }
       },
       {
         anchor: 'avatar',
         fieldName: 'Avatar',
         linkContract: 'persist',
         description: 'Shows in the chat message feed and members list for others to see',
-        mapping: {}
+        mapping: { 'persona': '@philt3r', 'tag': 'avatar' }
       },
       {
-        anchor: 'cats-name',
-        fieldName: "Cat's Name",
+        anchor: 'profile-picture',
+        fieldName: 'Profile Picture',
         linkContract: 'persist',
-        description: 'Your cats name',
-        mapping: {}
+        description: 'Large photo for top of the page',
+        mapping: { 'persona': '@philt3r', 'tag': 'profile-picture' }
       },
       {
-        anchor: 'cats-history',
-        fieldName: "Cat's History",
+        anchor: 'biography',
+        fieldName: 'Bio',
+        linkContract: 'persist',
+        description: 'Bio to get punters and promoters excited.',
+        mapping: { 'persona': '@philt3r', 'tag': 'biography' }
+      },
+      {
+        anchor: 'mixes',
+        fieldName: 'Mixes',
         linkContract: 'request',
-        description: 'Your cats history',
-        mapping: {}
+        description: 'List of recorded live DJ sets',
+        mapping: { 'persona': '@philt3r', 'tag': 'mixes' }
+      },
+      {
+        anchor: 'phone-number',
+        fieldName: 'Phone Number',
+        linkContract: 'persist',
+        description: 'Contact number for promoters to book on.',
+        mapping: { 'persona': 'Personal', 'tag': 'phone-number' }
       }
     ]
   }

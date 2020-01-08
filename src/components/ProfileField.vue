@@ -9,7 +9,7 @@
           chips
           @change="change"
           color="blue-grey lighten-2"
-          :label="profileFieldValue.fieldName + selectedPersona"
+          :label="profileFieldValue.fieldName + this.selectedPersona"
           item-text="fieldName"
           item-value="anchor"
           return-object
@@ -75,17 +75,6 @@ import VImageInput from 'vuetify-image-input/a-la-carte'
 import { personas } from '../../test-data/personas.js'
 // import { profiles } from '../../test-data/profiles.js'
 
-let personaThumbnails = personas.filter((persona) => persona.fields.some((field) => field.fieldType === 'thumbnail'))
-  .map(persona => {
-    let personaThumbnail = { ...persona }
-    let thumbNailFields = []
-    personaThumbnail.fields.filter((field) => field.fieldType === 'thumbnail').forEach(function (field) {
-      thumbNailFields.push({ anchor: field.anchor, personaTitle: personaThumbnail.title, fieldName: field.fieldName, fieldValue: field.fieldValue })
-    })
-    return thumbNailFields
-  })
-var thumbNailFields = [].concat.apply([], personaThumbnails)
-console.log(thumbNailFields)
 export default {
   name: 'ProfileField',
   components: {
@@ -93,18 +82,48 @@ export default {
   },
   data () {
     return {
-      thumbnailList: thumbNailFields,
+      thumbnailList: [],
       selectedPersona: '',
       personasImages: [],
       profileData: null,
       search: null,
       addThumbnailDialog: false,
-      addThumbnailItem: { anchor: '', personaTitle: this.profileName, fieldName: this.profileFieldValue.fieldName, fieldValue: '' }
+      addThumbnailItem: { anchor: '', personaTitle: this.profileName, fieldName: this.profileFieldValue.fieldName, fieldValue: '' },
+      mapping: this.profileFieldValue.mapping
     }
   },
   mounted () {
+    let personaThumbnails = personas.filter((persona) => persona.fields.some((field) => field.fieldType === this.size))
+      .map(persona => {
+        let personaThumbnail = { ...persona }
+        let thumbNailFields = []
+        personaThumbnail.fields.filter((field) => field.fieldType === this.size).forEach(function (field) {
+          thumbNailFields.push({ anchor: field.anchor, personaTitle: personaThumbnail.title, fieldName: field.fieldName, fieldValue: field.fieldValue })
+        })
+        return thumbNailFields
+      })
+    this.thumbnailList = [].concat.apply([], personaThumbnails)
     this.thumbnailList.push(this.addThumbnailItem)
     console.log(this.thumbnailList)
+    if (this.mapping !== {}) {
+      let anchor = this.mapping.tag
+      let title = this.mapping.persona
+      console.log(anchor)
+      console.log(title)
+
+      let mappedPersona = personas.filter((persona) => persona.title === title)
+        .map(persona => {
+          let mappedPersonaCopy = { ...persona }
+          let mappedFields = []
+          mappedPersonaCopy.fields.filter((field) => field.anchor === anchor).forEach(function (field) {
+            mappedFields.push({ anchor: field.anchor, personaTitle: title, fieldName: field.fieldName, fieldValue: field.fieldValue })
+          })
+          return mappedFields
+        })
+
+      console.log([].concat.apply([], mappedPersona)[0])
+      this.profileData = [].concat.apply([], mappedPersona)[0]
+    }
   },
   methods: {
     change (field) {
@@ -125,9 +144,9 @@ export default {
       this.profileData = null
     }
   },
-  props: ['profileName', 'profileFieldValue'],
+  props: ['size', 'profileName', 'profileFieldValue'],
   watch: {
-    selected (response) {
+    selectedPersona (response) {
       console.log(response)
     }
   }
