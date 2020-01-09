@@ -36,6 +36,6 @@ export const profileSpecBuilderNewTests = describe('New Profile Spec', () => {
       }
     })
     const title = wrapper.find('.v-list-item__title')
-    expect(title.text()).toContain('Profile Spec - Cat Owner')
+    expect(title.text()).toContain('Profile Spec - @philt3r website')
   })
 })

@@ -12,19 +12,12 @@
         <v-list-item-subtitle>by @philt3r</v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-action>
-        <v-btn icon>
-          <template>
-            <img src="img/icons/holo-h.png" style="height: 20px">
-            Earned $47.45
-          </template>
-        </v-btn>
-      </v-list-item-action>
-      <v-list-item-action>
-        <v-btn icon>
-          <template>
-            <img src="img/holochain-circle.png" style="height: 30px">
-          </template>
-        </v-btn>
+        <v-list-item class="grow">
+          <v-row align="center" justify="end">
+            <v-icon class="mr-1">mdi-headphones</v-icon>
+            <span class="subheading mr-2">2</span>
+          </v-row>
+        </v-list-item>
       </v-list-item-action>
     </v-list-item>
     <track-surfer ref="track" :track="track" :play="isPlaying" @duration="updateDuration" @played="updatePlayed" class="ml-2 mr-2"/>
@@ -32,11 +25,26 @@
       <v-list-item class="grow">
         <v-row align="center" justify="end">
           <span class="subheading mr-2">{{this.formattedDuration}}</span>
-          <v-icon class="mr-1">mdi-heart</v-icon>
-          <span class="subheading mr-2">256</span>
           <span class="mr-1">·</span>
-          <v-icon class="mr-1">mdi-share-variant</v-icon>
-          <span class="subheading">45</span>
+          <v-icon class="mr-1">mdi-headphones</v-icon>
+          <span class="subheading mr-2">1256</span>
+          <span class="mr-1">·</span>
+          <v-icon class="mr-1">mdi-heart</v-icon>
+          <span class="subheading mr-2">45</span>
+          <span class="mr-1">·</span>
+          <v-btn icon class="mr-1 ml-n1">
+            <template>
+              <img src="img/icons/favicon-32x32.png" style="height: 20px">
+            </template>
+          </v-btn>
+          <span class="subheading ml-n1 mr-2">67</span>
+          <span class="mr-1">·</span>
+          <v-btn icon class="mr-1 ml-n1">
+            <template>
+              <img src="img/holochain-circle.png" style="height: 20px">
+            </template>
+          </v-btn>
+          <span class="subheading ml-n2 mr-2">45</span>
         </v-row>
       </v-list-item>
     </v-card-actions>

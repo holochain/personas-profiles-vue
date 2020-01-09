@@ -6,47 +6,48 @@ export const profiles = [
       {
         anchor: 'preferred_username',
         fieldName: 'Handle',
+        fieldType: 'singleLineText',
         linkContract: 'persist',
-        description: 'How you are referenced in chat',
-        mapping: {}
+        description: 'How you are referenced in chat'
       },
       {
         anchor: 'avatar',
         fieldName: 'Avatar',
+        fieldType: 'thumbnail',
         linkContract: 'persist',
-        description: 'Shows in the chat message feed and members list for others to see',
-        mapping: {}
+        description: 'Shows in the chat message feed and members list for others to see'
       },
       {
         anchor: 'profile-picture',
         fieldName: 'Profile Picture',
+        fieldType: 'image',
         linkContract: 'persist',
-        description: 'Used on your cats profile page',
-        mapping: {}
+        description: 'Used on your cats profile page'
       },
       {
         anchor: 'cats-name',
         fieldName: "Cat's Name",
+        fieldType: 'singleLineText',
         linkContract: 'persist',
-        description: 'Your cats name',
-        mapping: {}
+        description: "Your cat's name"
       },
       {
         anchor: 'cats-history',
         fieldName: "Cat's History",
+        fieldType: 'multiLineText',
         linkContract: 'request',
-        description: 'Your cats history',
-        mapping: {}
+        description: 'Your cats history'
       }
     ]
   },
   {
-    id: 'Qmhashyphilt3rProfile',
+    id: 'Qmhashyphilt3rProfile2',
     name: '@philt3r website',
     fields: [
       {
         anchor: 'stage-name',
         fieldName: 'Stage Name',
+        fieldType: 'singleLineText',
         linkContract: 'persist',
         description: 'Alter ego for behinds the decks',
         mapping: { 'persona': '@philt3r', 'tag': 'stage-name' }
@@ -54,6 +55,7 @@ export const profiles = [
       {
         anchor: 'avatar',
         fieldName: 'Avatar',
+        fieldType: 'thumbnail',
         linkContract: 'persist',
         description: 'Shows in the chat message feed and members list for others to see',
         mapping: { 'persona': '@philt3r', 'tag': 'avatar' }
@@ -61,6 +63,7 @@ export const profiles = [
       {
         anchor: 'profile-picture',
         fieldName: 'Profile Picture',
+        fieldType: 'image',
         linkContract: 'persist',
         description: 'Large photo for top of the page',
         mapping: { 'persona': '@philt3r', 'tag': 'profile-picture' }
@@ -68,6 +71,7 @@ export const profiles = [
       {
         anchor: 'biography',
         fieldName: 'Bio',
+        fieldType: 'multiLineText',
         linkContract: 'persist',
         description: 'Bio to get punters and promoters excited.',
         mapping: { 'persona': '@philt3r', 'tag': 'biography' }
@@ -75,6 +79,7 @@ export const profiles = [
       {
         anchor: 'mixes',
         fieldName: 'Mixes',
+        fieldType: 'playlist',
         linkContract: 'request',
         description: 'List of recorded live DJ sets',
         mapping: { 'persona': '@philt3r', 'tag': 'mixes' }
@@ -82,9 +87,32 @@ export const profiles = [
       {
         anchor: 'phone-number',
         fieldName: 'Phone Number',
+        fieldType: 'singleLineText',
         linkContract: 'persist',
         description: 'Contact number for promoters to book on.',
         mapping: { 'persona': 'Personal', 'tag': 'phone-number' }
+      }
+    ]
+  },
+  {
+    id: 'Qmhashyphilt3rProfile2',
+    name: '@philt3r website',
+    fields: [
+      {
+        anchor: 'avatar',
+        fieldName: 'Avatar',
+        fieldType: 'thumbnail',
+        linkContract: 'persist',
+        description: 'Shows in the chat message feed and members list for others to see',
+        mapping: { 'persona': '@philt3r', 'tag': 'avatar' }
+      },
+      {
+        anchor: 'profile-picture',
+        fieldName: 'Profile Picture',
+        fieldType: 'image',
+        linkContract: 'persist',
+        description: 'Large photo for top of the page',
+        mapping: { 'persona': '@philt3r', 'tag': 'profile-picture' }
       }
     ]
   }
