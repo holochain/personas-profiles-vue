@@ -21,7 +21,8 @@
           <v-list-item-content>{{data.item.fieldValue}}</v-list-item-content>
         </template>
         <template v-slot:item="data">
-          <v-list-item-content>{{data.item.fieldValue}}</v-list-item-content>
+          <v-list-item-title>{{data.item.fieldValue}}</v-list-item-title>
+          <v-list-item-subtitle v-html="'Persona - asddsfghdfghdfgdgh ' + data.item.personaTitle"></v-list-item-subtitle>
         </template>
       </v-combobox>
     </v-col>
@@ -55,7 +56,6 @@ export default {
       })
     this.fieldTypeList = [].concat.apply([], personaTexts)
     this.fieldTypeList.unshift({ header: 'Select an option or create one' })
-    console.log(this.fieldTypeList)
 
     if (this.mapping !== undefined) {
       let anchor = this.mapping.tag
@@ -83,7 +83,6 @@ export default {
   },
   methods: {
     onBlur (e) {
-      console.log(this.search)
       if (this.search !== null) {
         this.onChange(this.search)
       }
@@ -98,11 +97,8 @@ export default {
       }
       this.selectedPersona = ' (' + field.personaTitle + '-' + field.fieldName + ')'
       this.profileData = field
+      this.$emit('profile-field-changed', this.profileFieldValue, field)
       this.$refs['combobox'].blur()
-      let that = this
-      this.$nextTick(() => {
-        that.$emit('profile-field-changed', field)
-      })
     },
     remove (item) {
       console.log('remove')

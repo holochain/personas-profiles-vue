@@ -26,14 +26,14 @@ export const profiles = [
       },
       {
         anchor: 'cats-name',
-        fieldName: "Cat's Name",
+        fieldName: 'Cats Name',
         fieldType: 'singleLineText',
         linkContract: 'persist',
-        description: "Your cat's name"
+        description: 'Your cats name'
       },
       {
         anchor: 'cats-history',
-        fieldName: "Cat's History",
+        fieldName: 'Cats History',
         fieldType: 'multiLineText',
         linkContract: 'request',
         description: 'Your cats history'

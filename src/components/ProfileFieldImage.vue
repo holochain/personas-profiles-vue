@@ -9,8 +9,6 @@
         @change="change"
         color="blue-grey lighten-2"
         :label="profileFieldValue.fieldName + this.selectedPersona"
-        :hint="profileFieldValue.description"
-        persistent-hint
         item-text="fieldName"
         item-value="anchor"
         return-object>

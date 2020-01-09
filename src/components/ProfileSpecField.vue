@@ -92,7 +92,7 @@ export default {
   props: ['newField', 'profileSpecFieldValue'],
   watch: {
     selected (field) {
-      console.log(field.anchor)
+      // console.log(field.anchor)
       if (field.fieldName === undefined) {
         this.isEditing = true
       }
@@ -109,12 +109,10 @@ export default {
   },
   mounted () {
     if (this.profileSpecFieldValue) {
-      console.log(this.profileSpecFieldValue)
       let anchor = this.profileSpecFieldValue.anchor
       let fieldName = this.profileSpecFieldValue.fieldName
       let linkContract = this.profileSpecFieldValue.linkContract
       let description = this.profileSpecFieldValue.description
-
       this.selected = { anchor: anchor, fieldName: fieldName, linkContract: linkContract, description: description }
     }
   }
