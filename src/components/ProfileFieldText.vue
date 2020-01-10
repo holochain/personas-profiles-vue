@@ -22,7 +22,7 @@
         </template>
         <template v-slot:item="data">
           <v-list-item-title>{{data.item.fieldValue}}</v-list-item-title>
-          <v-list-item-subtitle v-html="'Persona - asddsfghdfghdfgdgh ' + data.item.personaTitle"></v-list-item-subtitle>
+          <v-list-item-subtitle v-html="'Persona - ' + data.item.personaTitle"></v-list-item-subtitle>
         </template>
       </v-combobox>
     </v-col>
@@ -30,8 +30,6 @@
 </template>
 
 <script>
-import { personas } from '../../test-data/personas.js'
-
 export default {
   name: 'ProfileFieldText',
   components: {
@@ -42,10 +40,11 @@ export default {
       selectedPersona: '',
       profileData: null,
       search: null,
-      mapping: this.profileFieldValue.mapping }
+      mapping: this.profileFieldValue.mapping
+    }
   },
   mounted () {
-    let personaTexts = personas.filter((persona) => persona.fields.some((field) => field.fieldType === this.fieldType))
+    let personaTexts = this.personas.filter((persona) => persona.fields.some((field) => field.fieldType === this.fieldType))
       .map(persona => {
         let personaText = { ...persona }
         let textFields = []
@@ -63,7 +62,7 @@ export default {
       console.log(anchor)
       console.log(title)
 
-      let mappedPersona = personas.filter((persona) => persona.title === title)
+      let mappedPersona = this.personas.filter((persona) => persona.title === title)
         .map(persona => {
           let mappedPersonaCopy = { ...persona }
           let mappedFields = []
@@ -118,7 +117,7 @@ export default {
         .indexOf(query.toString().toLowerCase()) > -1
     }
   },
-  props: ['fieldType', 'profileName', 'profileFieldValue']
+  props: ['personas', 'fieldType', 'profileName', 'profileFieldValue']
 }
 </script>
 

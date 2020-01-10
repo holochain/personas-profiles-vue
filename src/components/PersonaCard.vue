@@ -2,25 +2,22 @@
   <v-card class="mx-auto">
     <v-list-item>
      <v-list-item-avatar>
-       <v-img :src="avatarData" class="ml-5"></v-img>
-       <template>
-        <v-slide-x-reverse-transition mode="out-in">
-          <v-icon
-            large
-            class="ml-1 "
-            :key="`icon-${isEditing}`"
-            :color="isEditing ? 'success' : 'info'"
-            @click="isEditing = !isEditing"
-            v-text="isEditing ? 'mdi-check-outline' : 'mdi-circle-edit-outline'">
-          </v-icon>
-        </v-slide-x-reverse-transition>
-      </template>
+       <v-img :src="avatarData"></v-img>
+     </v-list-item-avatar>
+     <v-list-item-avatar class="ml-n5 mr-1">
+       <v-slide-x-reverse-transition mode="out-in">
+         <v-icon
+           large
+           :key="`icon-${isEditing}`"
+           :color="isEditing ? 'success' : 'info'"
+           @click="isEditing = !isEditing"
+           v-text="isEditing ? 'mdi-check-outline' : 'mdi-circle-edit-outline'">
+         </v-icon>
+       </v-slide-x-reverse-transition>
      </v-list-item-avatar>
      <v-list-item-content>
-       <v-text-field v-model="persona.title" id="showSingleLineTextField" class="ml-2" :disabled="!isEditing" label="Enter Field Value" :hint="'Enter your Persona Title'" persistent-hint v-if="isEditing"></v-text-field>
-
-       <v-list-item-title class="headline ml-2" v-if="!isEditing">Persona - {{ persona.title }}</v-list-item-title>
-       <v-list-item-subtitle></v-list-item-subtitle>
+        <v-text-field v-model="persona.title" :disabled="!isEditing" label="Enter Field Value" :hint="'Enter your Persona Title'" persistent-hint v-if="isEditing"></v-text-field>
+        <v-list-item-title class="headline" v-if="!isEditing">Persona - {{ persona.title }}</v-list-item-title>
      </v-list-item-content>
      <v-list-item-action v-if="isEditing">
        <v-dialog v-model="dialog" persistent max-width="290">

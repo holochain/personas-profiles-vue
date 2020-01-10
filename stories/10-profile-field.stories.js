@@ -1,5 +1,5 @@
 import { storyFactory } from '../.storybook/util/helpers'
-import { object, text } from '@storybook/addon-knobs'
+import { object, text, array } from '@storybook/addon-knobs'
 // import { action } from '@storybook/addon-actions'
 // import { linkTo } from '@storybook/addon-links'
 // import { specs } from 'storybook-addon-specifications'
@@ -8,24 +8,27 @@ import ProfileField from '../src/components/ProfileField.vue'
 // import personaNewFieldNotes from './notes/profile-field-new.md'
 // import { personas } from '../test-data/personas.js'
 import { profiles } from '../test-data/profiles.js'
+import { personas } from '../test-data/personas.js'
 
 export default {
   title: 'Profile Field'
 }
 
-let profileAvatarFieldNoMapping = profiles[0].fields[1]
 const storyComponent = storyFactory({ ProfileField })
 export const newField = () => {
   const story = storyComponent({
     props: {
+      personas: {
+        default: array('Personas', personas)
+      },
       profileFieldValue: {
-        default: object('Profile Field', profileAvatarFieldNoMapping)
+        default: object('Profile Field', profiles[0].fields[0])
       },
       profileName: {
         default: text('Profile Name', profiles[0].name)
       }
     },
-    template: `<profile-field fieldType="thumbnail" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
+    template: `<profile-field fieldType="thumbnail" :personas="personas" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
   })
   // specs(() => newProfileFieldTests)
   return story
@@ -37,6 +40,9 @@ newField.story = {
 export const existingAvatarField = () => {
   const story = storyComponent({
     props: {
+      personas: {
+        default: array('Personas', personas)
+      },
       profileFieldValue: {
         default: object('Profile Field', profiles[1].fields[1])
       },
@@ -44,7 +50,7 @@ export const existingAvatarField = () => {
         default: text('Profile Name', profiles[1].name)
       }
     },
-    template: `<profile-field fieldType="thumbnail" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
+    template: `<profile-field fieldType="thumbnail" :personas="personas" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
   })
   // specs(() => existingProfileFieldTests)
   return story
@@ -56,6 +62,9 @@ existingAvatarField.story = {
 export const newImageField = () => {
   const story = storyComponent({
     props: {
+      personas: {
+        default: array('Personas', personas)
+      },
       profileFieldValue: {
         default: object('Profile Field', profiles[0].fields[2])
       },
@@ -63,7 +72,7 @@ export const newImageField = () => {
         default: text('Profile Name', profiles[0].name)
       }
     },
-    template: `<profile-field fieldType="image" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
+    template: `<profile-field fieldType="image" :personas="personas" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
   })
   // specs(() => newProfileFieldTests)
   return story
@@ -75,6 +84,9 @@ newImageField.story = {
 export const existingImageField = () => {
   const story = storyComponent({
     props: {
+      personas: {
+        default: array('Personas', personas)
+      },
       profileFieldValue: {
         default: object('Profile Field', profiles[1].fields[2])
       },
@@ -82,7 +94,7 @@ export const existingImageField = () => {
         default: text('Profile Name', profiles[1].name)
       }
     },
-    template: `<profile-field fieldType="image" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
+    template: `<profile-field fieldType="image" :personas="personas" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
   })
   // specs(() => existingProfileFieldTests)
   return story
@@ -94,14 +106,17 @@ existingImageField.story = {
 export const newSingleLineTextField = () => {
   const story = storyComponent({
     props: {
+      personas: {
+        default: array('Personas', personas)
+      },
       profileFieldValue: {
-        default: object('Profile Field', profiles[0].fields[0])
+        default: object('Profile Field', profiles[0].fields[1])
       },
       profileName: {
         default: text('Profile Name', profiles[0].name)
       }
     },
-    template: `<profile-field fieldType="singleLineText" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
+    template: `<profile-field fieldType="singleLineText" :personas="personas" :profileName="profileName" :profileFieldValue="profileFieldValue"></profile-field>`
   })
   // specs(() => newProfileFieldTests)
   return story
@@ -114,6 +129,7 @@ newSingleLineTextField.story = {
 // export const existingAvatarField = () => {
 //   const story = storyComponent({
 //     props: {
+
 //       personaFieldValue: {
 //         default: object('Field', personaFieldValue0)
 //       }

@@ -29,9 +29,19 @@ export default new Router({
       component: () => import(/* webpackChunkName: "personas" */ './views/Personas.vue')
     },
     {
+      path: '/cat-profile',
+      name: 'cat-profile',
+      component: () => import(/* webpackChunkName: "profile" */ './views/CatProfile.vue')
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: () => import(/* webpackChunkName: "profile" */ './views/Profile.vue')
+    },
+    {
+      path: '/profiles',
+      name: 'profiles',
+      component: () => import(/* webpackChunkName: "profiles" */ './views/Profiles.vue')
     },
     {
       path: '/profile-specs',

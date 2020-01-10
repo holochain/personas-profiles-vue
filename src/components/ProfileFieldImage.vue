@@ -9,6 +9,8 @@
         @change="change"
         color="blue-grey lighten-2"
         :label="profileFieldValue.fieldName + this.selectedPersona"
+        :hint="profileFieldValue.description"
+        persistent-hint
         item-text="fieldName"
         item-value="anchor"
         return-object>
@@ -62,9 +64,6 @@
 
 <script>
 import VImageInput from 'vuetify-image-input/a-la-carte'
-
-import { personas } from '../../test-data/personas.js'
-
 export default {
   name: 'ProfileFieldImage',
   components: {
@@ -82,7 +81,7 @@ export default {
     }
   },
   mounted () {
-    let personaThumbnails = personas.filter((persona) => persona.fields.some((field) => field.fieldType === this.fieldType))
+    let personaThumbnails = this.personas.filter((persona) => persona.fields.some((field) => field.fieldType === this.fieldType))
       .map(persona => {
         let personaThumbnail = { ...persona }
         let thumbNailFields = []
@@ -99,7 +98,7 @@ export default {
       console.log(anchor)
       console.log(title)
 
-      let mappedPersona = personas.filter((persona) => persona.title === title)
+      let mappedPersona = this.personas.filter((persona) => persona.title === title)
         .map(persona => {
           let mappedPersonaCopy = { ...persona }
           let mappedFields = []
@@ -136,7 +135,7 @@ export default {
       this.profileData = null
     }
   },
-  props: ['fieldType', 'profileName', 'profileFieldValue'],
+  props: ['personas', 'fieldType', 'profileName', 'profileFieldValue'],
   watch: {
     selectedPersona (response) {
       console.log(response)
