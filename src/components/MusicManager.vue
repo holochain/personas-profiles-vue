@@ -28,7 +28,7 @@
             </v-btn>
           </template>
           <template v-slot:label="{ item }">
-            <v-btn icon @click="listTracks(item)">
+            <v-btn text @click="listTracks(item)">
               {{item.name}}
             </v-btn>
           </template>

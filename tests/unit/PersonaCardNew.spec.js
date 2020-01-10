@@ -36,6 +36,6 @@ export const personaCardNewTests = describe('New Persona', () => {
       }
     })
     const title = wrapper.find('.v-list-item__title')
-    expect(title.text()).toContain('Persona - Personal')
+    expect(title.text()).toContain('Persona - @philt3r')
   })
 })

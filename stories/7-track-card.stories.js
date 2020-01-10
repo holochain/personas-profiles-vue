@@ -26,5 +26,21 @@ export const trackCard = () => {
   return story
 }
 trackCard.story = {
-  name: 'Not Playing'
+  name: 'Artist View'
+}
+
+export const anonTrackCard = () => {
+  const story = storyComponent({
+    props: {
+      track: {
+        default: object('Track', track)
+      }
+    },
+    template: `<track-card :track="track" :play="false"/>`
+  })
+  console.log(track)
+  return story
+}
+anonTrackCard.story = {
+  name: 'Anonymous Listener View'
 }

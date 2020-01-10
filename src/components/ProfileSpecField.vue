@@ -1,5 +1,5 @@
 <template>
-  <v-card width="100%" class="fill-height" fluid>
+  <v-card width="100%" class="fill-height" flat>
     <v-row align="center" justify="start" class="pa-1">
       <v-col cols="4">
         <v-autocomplete
@@ -24,7 +24,7 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-slide-x-reverse-transition mode="out-in">
-        <v-btn icon :color="isEditing ? 'success' : 'info'" @click="isEditing = !isEditing">{{isEditing ? 'save' : 'edit'}}
+        <v-btn text :color="isEditing ? 'success' : 'info'" @click="isEditing = !isEditing">{{isEditing ? 'save' : 'edit'}}
           <v-icon
             :key="`icon-${isEditing}`"
             :color="isEditing ? 'success' : 'info'"
@@ -35,7 +35,7 @@
       <v-slide-x-reverse-transition mode="out-in" v-if="isEditing">
         <v-dialog key="delete" v-model="dialog" persistent max-width="290">
            <template v-slot:activator="{ on }">
-             <v-btn color="red darken-1" dark icon v-on="on">Delete
+             <v-btn color="red darken-1" dark text v-on="on">Delete
                <v-icon
                  key="icon-delete" color="error">mdi-delete
                </v-icon>
@@ -92,7 +92,7 @@ export default {
   props: ['newField', 'profileSpecFieldValue'],
   watch: {
     selected (field) {
-      console.log(field.anchor)
+      // console.log(field.anchor)
       if (field.fieldName === undefined) {
         this.isEditing = true
       }
@@ -109,12 +109,10 @@ export default {
   },
   mounted () {
     if (this.profileSpecFieldValue) {
-      console.log(this.profileSpecFieldValue)
       let anchor = this.profileSpecFieldValue.anchor
       let fieldName = this.profileSpecFieldValue.fieldName
       let linkContract = this.profileSpecFieldValue.linkContract
       let description = this.profileSpecFieldValue.description
-
       this.selected = { anchor: anchor, fieldName: fieldName, linkContract: linkContract, description: description }
     }
   }

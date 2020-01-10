@@ -2,18 +2,16 @@
   <v-card class="mx-auto">
     <v-list-item>
      <v-list-item-avatar>
-       <template>
-        <v-slide-x-reverse-transition mode="out-in">
-          <v-icon
-            large
-            class="ml-1"
-            :key="`icon-${isEditing}`"
-            :color="isEditing ? 'success' : 'info'"
-            @click="isEditing = !isEditing"
-            v-text="isEditing ? 'mdi-check-outline' : 'mdi-circle-edit-outline'">
-          </v-icon>
-        </v-slide-x-reverse-transition>
-      </template>
+      <v-slide-x-reverse-transition mode="out-in">
+        <v-icon
+          large
+          class="ml-1"
+          :key="`icon-${isEditing}`"
+          :color="isEditing ? 'success' : 'info'"
+          @click="isEditing = !isEditing"
+          v-text="isEditing ? 'mdi-check-outline' : 'mdi-circle-edit-outline'">
+        </v-icon>
+      </v-slide-x-reverse-transition>
      </v-list-item-avatar>
      <v-list-item-content>
        <v-text-field v-model="profileSpecName" class="ml-2" :disabled="!isEditing" label="Profile Spec Name" :hint="'Enter Profile Spec Name'" persistent-hint v-if="isEditing"></v-text-field>

@@ -7,10 +7,6 @@ import PersonaField from '../src/components/PersonaField.vue'
 import { newPersonaFieldTests, existingPersonaFieldTests } from '../tests/unit/PersonaField.spec'
 import personaNewFieldNotes from './notes/persona-field-new.md'
 import { personas } from '../test-data/personas.js'
-const personaFieldValue0 = personas[0].fields[0]
-const personaFieldValue1 = personas[0].fields[1]
-const personaFieldValue2 = personas[0].fields[2]
-const personaFieldValue3 = personas[0].fields[3]
 
 export default {
   title: 'Persona Field',
@@ -35,12 +31,11 @@ export const existingSingleLineTextField = () => {
   const story = storyComponent({
     props: {
       personaFieldValue: {
-        default: object('Field', personaFieldValue1)
+        default: object('Field', personas[1].fields[1])
       }
     },
     template: `<persona-field key="singleLineText" :newField="false" :personaFieldValue="personaFieldValue"></persona-field>`
   })
-  console.log(personaFieldValue1)
   specs(() => existingPersonaFieldTests)
   return story
 }
@@ -48,16 +43,31 @@ existingSingleLineTextField.story = {
   name: 'Existing Single Line Text Field'
 }
 
+export const existingMultiLineTextField = () => {
+  const story = storyComponent({
+    props: {
+      personaFieldValue: {
+        default: object('Field', personas[1].fields[2])
+      }
+    },
+    template: `<persona-field key="multiLineText" :newField="false" :personaFieldValue="personaFieldValue"></persona-field>`
+  })
+  specs(() => existingPersonaFieldTests)
+  return story
+}
+existingMultiLineTextField.story = {
+  name: 'Existing Multi Line Text Field'
+}
+
 export const existingAvatarField = () => {
   const story = storyComponent({
     props: {
       personaFieldValue: {
-        default: object('Field', personaFieldValue0)
+        default: object('Field', personas[1].fields[0])
       }
     },
     template: `<persona-field key="avatar" :newField="false" :personaFieldValue="personaFieldValue"></persona-field>`
   })
-  console.log(personaFieldValue0)
   // specs(() => existingPersonaFieldTests)
   return story
 }
@@ -69,12 +79,11 @@ export const existingBigPhotoField = () => {
   const story = storyComponent({
     props: {
       personaFieldValue: {
-        default: object('Field', personaFieldValue3)
+        default: object('Field', personas[1].fields[3])
       }
     },
     template: `<persona-field key="multiLineText" :newField="false" :personaFieldValue="personaFieldValue"></persona-field>`
   })
-  console.log(personaFieldValue2)
   // specs(() => existingPersonaFieldTests)
   return story
 }

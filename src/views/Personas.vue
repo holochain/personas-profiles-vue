@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-app-bar app clipped-left>
       <v-toolbar>
-        <v-toolbar-title>Personas</v-toolbar-title>
+        <v-toolbar-title>Personas 🇦🇺</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn text @click="addPersona()">
           <v-icon>mdi-plus</v-icon>

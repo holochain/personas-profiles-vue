@@ -53,7 +53,7 @@ export const profileSpecs = [
     ]
   },
   {
-    id: 'QmhashyProfileSpec',
+    id: 'QmhashyProfileSpec2',
     name: 'Cat Owner',
     specFields: [
       {
